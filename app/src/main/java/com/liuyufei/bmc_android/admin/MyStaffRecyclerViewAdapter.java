@@ -1,6 +1,9 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +15,7 @@ import android.widget.TextView;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.StaffFragment.OnListFragmentInteractionListener;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
+import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Staff;
 import com.squareup.picasso.Picasso;
 
@@ -26,12 +30,30 @@ import static com.liuyufei.bmc_android.R.drawable.staff;
  */
 public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+//    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyStaffRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
-        mValues = items;
+
+    private Context mContext;
+
+    private Cursor mCursor;
+
+    private boolean mDataValid;
+
+    private int mRowIdColumn;
+
+    private DataSetObserver mDataSetObserver;
+
+    public MyStaffRecyclerViewAdapter(Context context, Cursor cursor, OnListFragmentInteractionListener listener) {
+        mContext = context;
+        mCursor = cursor;
         mListener = listener;
+        mDataValid = cursor != null;
+        mRowIdColumn = mDataValid ? mCursor.getColumnIndex("_id") : -1;
+        mDataSetObserver = new NotifyingDataSetObserver();
+        if (mCursor != null) {
+            mCursor.registerDataSetObserver(mDataSetObserver);
+        }
     }
 
     @Override
@@ -42,8 +64,19 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
     }
 
     @Override
+    public long getItemId(int position) {
+        if (mDataValid && mCursor != null && mCursor.moveToPosition(position)) {
+            return mCursor.getLong(mRowIdColumn);
+        }
+        return 0;
+    }
+
+    @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
+
+        String name = mCursor.getString(mCursor.getColumnIndexOrThrow(BMCContract.StaffEntry.COLUMN_NAME));
+//        String priority = mCursor.getString(mCursor.getColumnIndexOrThrow("priority"));.
+//        holder.mItem = mValues.get(position);
 
         Picasso.with(holder.mImgView.getContext())
                 .load(R.drawable.trump)
@@ -51,8 +84,8 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
                 .resize(100,100).centerCrop() //for performance,downsize the pic
                 .into(holder.mImgView );
 
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        holder.mIdView.setText("id");
+        holder.mContentView.setText(name);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,8 +116,32 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        if (mDataValid && mCursor != null) {
+            return mCursor.getCount();
+        }
+        return 0;
     }
+
+
+
+    private class NotifyingDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            super.onChanged();
+            mDataValid = true;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public void onInvalidated() {
+            super.onInvalidated();
+            mDataValid = false;
+            notifyDataSetChanged();
+            //There is no notifyDataSetInvalidated() method in RecyclerView.Adapter
+        }
+    }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

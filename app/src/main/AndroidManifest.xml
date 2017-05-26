@@ -21,10 +21,12 @@
             android:label="@string/title_activity_admin"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".admin.EditStaffActivity" />
-        <activity
-            android:name=".test"
-            android:label="@string/title_activity_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name=".data.BMCProvider"
+            android:authorities="com.bmc.dataprovider"
+            android:exported="false" />
+
     </application>
 
 </manifest>

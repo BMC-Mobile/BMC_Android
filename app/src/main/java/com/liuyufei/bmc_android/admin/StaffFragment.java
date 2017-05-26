@@ -1,6 +1,9 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
@@ -15,6 +18,7 @@ import android.view.ViewGroup;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
+import com.liuyufei.bmc_android.data.BMCContract;
 
 
 /**
@@ -30,6 +34,8 @@ public class StaffFragment extends Fragment {
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
+
+    ContentResolver contentResolver;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -63,7 +69,7 @@ public class StaffFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
-
+        contentResolver = view.getContext().getContentResolver();
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
@@ -74,8 +80,12 @@ public class StaffFragment extends Fragment {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
 
-            recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+
+            Cursor cursor = contentResolver.query(BMCContract.StaffEntry.CONTENT_URI,null,null,null,null);
+            recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(view.getContext(),cursor, mListener));
         }
+
+
 
         return view;
     }
