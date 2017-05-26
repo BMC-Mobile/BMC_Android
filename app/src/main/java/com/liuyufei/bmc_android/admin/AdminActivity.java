@@ -1,9 +1,11 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,9 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.liuyufei.bmc_android.R;
+import com.liuyufei.bmc_android.admin.dummy.DummyContent;
 
-public class Admin extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class AdminActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener,StaffFragment.OnListFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,9 @@ public class Admin extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //default go to staff fragment
+        goStaffFragment();
     }
 
     @Override
@@ -83,9 +89,8 @@ public class Admin extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-
+        if (id == R.id.staffMag) {
+            goStaffFragment();
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
@@ -101,5 +106,25 @@ public class Admin extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+
+    private void goStaffFragment(){
+        Fragment fragment = new StaffFragment();
+        Bundle args = new Bundle();
+//            args.putInt(StaffFragment.ARG_PLANET_NUMBER, position);
+        args.putInt("position", 1);
+        fragment.setArguments(args);
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
     }
 }
