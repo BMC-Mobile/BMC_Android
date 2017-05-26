@@ -20,7 +20,7 @@
             android:name=".admin.AdminActivity"
             android:label="@string/title_activity_admin"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditStaff"></activity>
+        <activity android:name=".admin.EditStaffActivity"></activity>
     </application>
 
 </manifest>

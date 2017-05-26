@@ -1,14 +1,15 @@
-package com.liuyufei.bmc_android;
+package com.liuyufei.bmc_android.admin;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.databinding.ActivityEditStaffBinding;
 import com.liuyufei.bmc_android.model.Staff;
 
-public class EditStaff extends AppCompatActivity {
+public class EditStaffActivity extends AppCompatActivity {
 
     Staff staff;
 

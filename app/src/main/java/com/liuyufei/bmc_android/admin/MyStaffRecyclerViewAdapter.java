@@ -1,7 +1,6 @@
 package com.liuyufei.bmc_android.admin;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.liuyufei.bmc_android.EditStaff;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.StaffFragment.OnListFragmentInteractionListener;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
@@ -75,7 +73,7 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
 
 //        Todo todo = new Todo(todoId, todoText, todoCreated, todoExpireDate, boolDone,
 //                todoCategory);
-        Intent intent = new Intent(v.getContext(), EditStaff.class);
+        Intent intent = new Intent(v.getContext(), EditStaffActivity.class);
         Staff staff = new Staff(1,"Trump","pathToPhoto","USA","President","1234567");
 
         //pass the ID to the todoActivity
