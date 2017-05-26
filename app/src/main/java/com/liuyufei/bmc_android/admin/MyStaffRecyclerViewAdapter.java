@@ -1,5 +1,7 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,12 +10,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.liuyufei.bmc_android.EditStaff;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.StaffFragment.OnListFragmentInteractionListener;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
+import com.liuyufei.bmc_android.model.Staff;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static com.liuyufei.bmc_android.R.drawable.staff;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
@@ -41,12 +47,13 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        Picasso.with(holder.mIdView.getContext())
+        Picasso.with(holder.mImgView.getContext())
                 .load(R.drawable.trump)
-                .error(R.drawable.playlist_play)
+                .error(staff)
                 .resize(100,100).centerCrop() //for performance,downsize the pic
-                .into(holder.mIdView );
+                .into(holder.mImgView );
 
+        holder.mIdView.setText(mValues.get(position).id);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +65,21 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+                toEditStaff(v);
             }
         });
+    }
+
+    private void toEditStaff(View v){
+
+//        Todo todo = new Todo(todoId, todoText, todoCreated, todoExpireDate, boolDone,
+//                todoCategory);
+        Intent intent = new Intent(v.getContext(), EditStaff.class);
+        Staff staff = new Staff(1,"Trump","pathToPhoto","USA","President","1234567");
+
+        //pass the ID to the todoActivity
+        intent.putExtra("staff", staff);
+        v.getContext().startActivity(intent);
     }
 
     @Override
@@ -69,14 +89,16 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final ImageView mIdView;
+        public final TextView mIdView;
+        public final ImageView mImgView;
         public final TextView mContentView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (ImageView) view.findViewById(R.id.staffImg);
+            mIdView = (TextView) view.findViewById(R.id.id);
+            mImgView = (ImageView) view.findViewById(R.id.staffImg);
             mContentView = (TextView) view.findViewById(R.id.staffName);
         }
 
