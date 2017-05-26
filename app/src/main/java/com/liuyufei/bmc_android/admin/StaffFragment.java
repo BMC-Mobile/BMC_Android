@@ -71,6 +71,7 @@ public class StaffFragment extends Fragment {
             }
             recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
+
         return view;
     }
 

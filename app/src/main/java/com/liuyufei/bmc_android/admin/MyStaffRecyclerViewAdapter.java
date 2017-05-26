@@ -1,9 +1,11 @@
 package com.liuyufei.bmc_android.admin;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.liuyufei.bmc_android.R;
@@ -37,12 +39,13 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
+//        holder.mIdView.setImageResource(R.drawable.trump);
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i(this.getClass().getName(),"Item clicked in the list");
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
@@ -59,15 +62,15 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
+//        public final ImageView mIdView;
         public final TextView mContentView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+//            mIdView = (ImageView) view.findViewById(R.id.staffImg);
+            mContentView = (TextView) view.findViewById(R.id.staffName);
         }
 
         @Override

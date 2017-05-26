@@ -48,7 +48,7 @@ public class AdminActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //default go to staff fragment
-        goStaffFragment();
+//        goStaffFragment();
     }
 
     @Override
@@ -110,7 +110,7 @@ public class AdminActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
+        //callback listener from fragment
     }
 
 
