@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent;
@@ -70,22 +71,12 @@ public class StaffFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         contentResolver = view.getContext().getContentResolver();
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
 
+        ListView lv = (ListView) view;
 
-            Cursor cursor = contentResolver.query(BMCContract.StaffEntry.CONTENT_URI,null,null,null,null);
-            recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(view.getContext(),cursor, mListener));
-        }
-
-
+        Cursor cursor = contentResolver.query(BMCContract.StaffEntry.CONTENT_URI, null, null, null, null);
+        StaffCursorAdapter adapter = new StaffCursorAdapter(view.getContext(), cursor, false);
+        lv.setAdapter(adapter);
 
         return view;
     }
