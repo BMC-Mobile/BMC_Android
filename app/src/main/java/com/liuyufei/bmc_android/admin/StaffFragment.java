@@ -77,16 +77,6 @@ public class StaffFragment extends Fragment {
             recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
 
-
-//        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
         return view;
     }
 

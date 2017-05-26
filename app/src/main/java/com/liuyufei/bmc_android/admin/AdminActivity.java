@@ -20,7 +20,10 @@ import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent;
 
 public class AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,StaffFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, StaffFragment.OnListFragmentInteractionListener {
+
+
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,17 @@ public class AdminActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Add Staff", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+//        fab.hide();
 
         //default go to staff fragment
 //        goStaffFragment();
@@ -106,7 +120,16 @@ public class AdminActivity extends AppCompatActivity
     }
 
 
-    private void goStaffFragment(){
+    private void goStaffFragment() {
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Add Staff", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+//        fab.show();
+
         Fragment fragment = new StaffFragment();
         Bundle args = new Bundle();
 //            args.putInt(StaffFragment.ARG_PLANET_NUMBER, position);
@@ -118,5 +141,6 @@ public class AdminActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
+
     }
 }
