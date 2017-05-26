@@ -17,7 +17,7 @@
 .idea/**/uiDesigner.xml
 
 # Gradle:
-.idea
+
 .gradle
 build
 gradle
