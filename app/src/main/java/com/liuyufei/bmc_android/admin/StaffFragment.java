@@ -69,6 +69,7 @@ public class StaffFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
+
             recyclerView.setAdapter(new MyStaffRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
 

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.StaffFragment.OnListFragmentInteractionListener;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -39,7 +40,13 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-//        holder.mIdView.setImageResource(R.drawable.trump);
+
+        Picasso.with(holder.mIdView.getContext())
+                .load(R.drawable.trump)
+                .error(R.drawable.playlist_play)
+                .resize(100,100).centerCrop() //for performance,downsize the pic
+                .into(holder.mIdView );
+
         holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
@@ -62,14 +69,14 @@ public class MyStaffRecyclerViewAdapter extends RecyclerView.Adapter<MyStaffRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-//        public final ImageView mIdView;
+        public final ImageView mIdView;
         public final TextView mContentView;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-//            mIdView = (ImageView) view.findViewById(R.id.staffImg);
+            mIdView = (ImageView) view.findViewById(R.id.staffImg);
             mContentView = (TextView) view.findViewById(R.id.staffName);
         }
 

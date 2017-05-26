@@ -11,6 +11,12 @@
         android:layout_margin="@dimen/text_margin"
         android:textAppearance="?attr/textAppearanceListItem" />
 
+    <ImageView
+        android:id="@+id/staffImg"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/playlist_play" />
+
     <TextView
         android:id="@+id/staffName"
         android:layout_width="wrap_content"
