@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.liuyufei.bmc_android.R;
+
 import static com.liuyufei.bmc_android.data.BMCContract.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -64,7 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(StaffEntry.COLUMN_NAME, "Trump"+i);
             values.put(StaffEntry.COLUMN_MOBILE, "123456");
             values.put(StaffEntry.COLUMN_TITLE, "President");
-            values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
+            values.put(StaffEntry.COLUMN_PHOTO, R.drawable.staff);
 
             db.insert(StaffEntry.TABLE_NAME, null, values);
             values.clear();

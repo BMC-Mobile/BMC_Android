@@ -5,7 +5,6 @@
         <variable
             name="staff"
             type="com.liuyufei.bmc_android.model.Staff"  />
-
     </data>
 
     <RelativeLayout
@@ -22,57 +21,61 @@
             android:id="@+id/staffProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:layout_marginTop="16dp"
-            app:srcCompat="@drawable/staff"
+            android:src="@drawable/staff"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="13dp" />
 
         <EditText
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView2"
-            android:layout_marginBottom="13dp"
-            android:layout_toEndOf="@+id/imageView2"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@={staff.title}"
-           />
+            android:layout_marginBottom="30dp"
+            android:layout_above="@+id/mobile"
+            android:layout_alignStart="@+id/mobile" />
 
         <EditText
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/imageView2"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@+id/imageView2"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@={staff.name}"
-            />
+            android:layout_above="@+id/title"
+            android:layout_alignStart="@+id/title"
+            android:layout_marginBottom="25dp" />
 
         <EditText
             android:id="@+id/mobile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="37dp"
             android:ems="10"
             android:text="@={staff.mobile}"
-            android:inputType="number" />
+            android:inputType="number"
+            android:layout_marginBottom="33dp"
+            android:layout_above="@+id/department"
+            android:layout_alignStart="@+id/department" />
 
         <EditText
             android:id="@+id/department"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/mobile"
-            android:layout_below="@+id/mobile"
-            android:layout_marginTop="30dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@={staff.department}"
-            />
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="49dp" />
+
+        <Button
+            android:id="@+id/action_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="Save" />
     </RelativeLayout>
     </layout>

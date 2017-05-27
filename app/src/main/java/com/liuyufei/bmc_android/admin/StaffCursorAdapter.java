@@ -13,6 +13,8 @@ import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+
 
 public class StaffCursorAdapter extends CursorAdapter {
     public StaffCursorAdapter(Context context, Cursor c, boolean autoRequery) {
@@ -30,11 +32,13 @@ public class StaffCursorAdapter extends CursorAdapter {
         TextView staffName = (TextView) view.findViewById(R.id.staffName);
         ImageView photo = (ImageView) view.findViewById(R.id.staffImg);
         int textColumn = cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME);
+        int photoColumn = cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_PHOTO);
         String text = cursor.getString(textColumn);
+        String photoPath = cursor.getString(photoColumn);
         staffName.setText(text);
 
         Picasso.with(context)
-                .load(R.drawable.trump)
+                .load(new File(photoPath))
                 .error(R.drawable.staff)
                 .resize(100,100).centerCrop() //for performance,downsize the pic
                 .into(photo);

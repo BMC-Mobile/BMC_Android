@@ -202,10 +202,12 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
                                 bundle.putString("table", BMCContract.StaffEntry.TABLE_NAME);
                                 getLoaderManager().restartLoader(URL_LOADER, bundle, StaffFragment.this);
                             }
-                        }, 1000);
+                        }, 2000);
                     }
+                }else{
+                    //select all records
+                    getLoaderManager().restartLoader(URL_LOADER, null, StaffFragment.this);
                 }
-                getLoaderManager().restartLoader(URL_LOADER, null, StaffFragment.this);
                 return false;
             }
         });
