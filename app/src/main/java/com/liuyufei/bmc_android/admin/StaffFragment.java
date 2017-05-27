@@ -2,6 +2,7 @@ package com.liuyufei.bmc_android.admin;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -11,11 +12,16 @@ import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
@@ -57,7 +63,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLoaderManager().initLoader(URL_LOADER, null, this);
-
+        setHasOptionsMenu(true);
     }
 
 
@@ -67,6 +73,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         contentResolver = view.getContext().getContentResolver();
 
@@ -133,6 +140,33 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+    }
+
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.search_menu, menu);
+        MenuItem searchItem = menu.findItem(R.id.search_item);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.i("Search","onQueryTextSubmit....");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.i("Search","onQueryTextChange....");
+                return false;
+            }
+        });
+        searchView.setQueryHint("Search");
+
+        super.onCreateOptionsMenu(menu, inflater);
+
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
