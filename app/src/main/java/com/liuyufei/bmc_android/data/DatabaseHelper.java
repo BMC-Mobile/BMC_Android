@@ -59,27 +59,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void initData(SQLiteDatabase db) {
         Log.i("DatabaseHelper", "init data...");
         ContentValues values = new ContentValues();
-        values.put(StaffEntry.COLUMN_DEPARTMENT, "USA");
-        values.put(StaffEntry.COLUMN_NAME, "Trump");
-        values.put(StaffEntry.COLUMN_MOBILE, "123456");
-        values.put(StaffEntry.COLUMN_TITLE, "President");
-        values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
+        for(int i=0;i<20;i++){
+            values.put(StaffEntry.COLUMN_DEPARTMENT, "USA");
+            values.put(StaffEntry.COLUMN_NAME, "Trump"+i);
+            values.put(StaffEntry.COLUMN_MOBILE, "123456");
+            values.put(StaffEntry.COLUMN_TITLE, "President");
+            values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
 
-        db.insert(StaffEntry.TABLE_NAME, null, values);
-        values.clear();
-
-        values.put(StaffEntry.COLUMN_DEPARTMENT, "China");
-        values.put(StaffEntry.COLUMN_NAME, "Xi");
-        values.put(StaffEntry.COLUMN_MOBILE, "123456");
-        values.put(StaffEntry.COLUMN_TITLE, "President");
-        values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
-        db.insert(StaffEntry.TABLE_NAME, null, values);
-
-
-
-//        values.put(TodosEntry.COLUMN_CATEGORY, String.valueOf(idCat));
-//        values.put(TodosEntry.COLUMN_TEXT, "Welcome to Todos!");
-//        long idTodo = db.insert(TodosEntry.TABLE_NAME, null, values);
+            db.insert(StaffEntry.TABLE_NAME, null, values);
+            values.clear();
+        }
     }
 
     @Override

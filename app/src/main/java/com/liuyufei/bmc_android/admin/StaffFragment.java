@@ -69,6 +69,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        getLoaderManager().initLoader(URL_LOADER, null, this);
     }
 
 
@@ -80,7 +81,6 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getLoaderManager().initLoader(URL_LOADER, null, this);
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         contentResolver = view.getContext().getContentResolver();
         lv = (ListView) view;
@@ -93,11 +93,11 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
                 cursor = (Cursor) adapterView.getItemAtPosition(pos);
                 //get the object data from the cursor
                 int staffID = cursor.getInt(cursor.getColumnIndex(BMCContract.StaffEntry._ID));
+                String staffMobile = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_MOBILE));
                 String staffName = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
                 String staffPhoto = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_PHOTO));
                 String staffDepartment = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_DEPARTMENT));
                 String staffTitle = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_TITLE));
-                String staffMobile = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_MOBILE));
                 //create the object that will be passed to the todoActivity
                 Staff staff = new Staff(staffID, staffName, staffPhoto, staffDepartment, staffTitle, staffMobile);
                 Intent intent = new Intent(getActivity(), EditStaffActivity.class);
@@ -136,7 +136,6 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         String[] selectionArgs = null;
         String selection = "";
         String orderBy = null;
-        List<String> projection = new ArrayList<>();
 
         if (args != null) {
             selectionArgs = args.getStringArray("selectionArgs");
@@ -145,13 +144,6 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
 
             switch (table) {
                 case BMCContract.StaffEntry.TABLE_NAME:
-                    projection = Arrays.asList(
-                            BMCContract.StaffEntry.COLUMN_NAME,
-                            BMCContract.StaffEntry.TABLE_NAME+"."+BMCContract.StaffEntry._ID,
-                            BMCContract.StaffEntry.COLUMN_DEPARTMENT,
-                            BMCContract.StaffEntry.COLUMN_PHOTO,
-                            BMCContract.StaffEntry.COLUMN_TITLE
-                    );
                     resourceUri = BMCContract.StaffEntry.CONTENT_URI;
                     orderBy = BMCContract.StaffEntry.COLUMN_NAME;
                     break;
@@ -164,8 +156,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
             }
         }
 
-        String[] projectionArray = new String[projection.size()];
-        Loader<Cursor> lc = new CursorLoader(getActivity(), resourceUri, projection.toArray(projectionArray), selection, selectionArgs, orderBy);
+        Loader<Cursor> lc = new CursorLoader(getActivity(), resourceUri, null, selection, selectionArgs, orderBy);
         return lc;
     }
 
