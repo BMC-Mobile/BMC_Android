@@ -2,7 +2,6 @@ package com.liuyufei.bmc_android.admin;
 
 import android.app.Fragment;
 import android.app.LoaderManager;
-import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -26,13 +25,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.liuyufei.bmc_android.R;
-import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Staff;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 /**
@@ -230,6 +224,5 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
     }
 }

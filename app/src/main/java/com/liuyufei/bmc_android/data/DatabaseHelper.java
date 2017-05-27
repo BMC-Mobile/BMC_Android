@@ -61,7 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void initData(SQLiteDatabase db) {
         Log.i("DatabaseHelper", "init data...");
         ContentValues values = new ContentValues();
-        for(int i=0;i<20;i++){
+        for(int i=0;i<10;i++){
             values.put(StaffEntry.COLUMN_DEPARTMENT, "USA");
             values.put(StaffEntry.COLUMN_NAME, "Trump"+i);
             values.put(StaffEntry.COLUMN_MOBILE, "123456");

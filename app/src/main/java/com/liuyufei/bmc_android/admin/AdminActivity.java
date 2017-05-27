@@ -1,16 +1,12 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.app.Fragment;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.MenuInflater;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -18,9 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.liuyufei.bmc_android.R;
-import com.liuyufei.bmc_android.admin.dummy.DummyContent;
 
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StaffFragment.OnListFragmentInteractionListener {
@@ -114,10 +110,7 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-        //callback listener from fragment
-    }
+
 
 
     private void goStaffFragment() {
@@ -126,6 +119,10 @@ public class AdminActivity extends AppCompatActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Add Staff", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                Intent intent = new Intent(AdminActivity.this,EditStaffActivity.class);
+                startActivity(intent);
+
             }
         });
         fab.show();

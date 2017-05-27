@@ -43,6 +43,7 @@ public class EditStaffActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         staff = (Staff) intent.getSerializableExtra("staff");
+        if(staff==null) staff = new Staff(0,"name", "no photo", "department", "title", "mobile");
         ActivityEditStaffBinding binding =
                 DataBindingUtil.setContentView(this, R.layout.activity_edit_staff);
 

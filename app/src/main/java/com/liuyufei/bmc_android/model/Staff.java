@@ -22,6 +22,5 @@ public class Staff implements Serializable {
         this.mobile.set(mobile);
     }
 
-
 }
 
