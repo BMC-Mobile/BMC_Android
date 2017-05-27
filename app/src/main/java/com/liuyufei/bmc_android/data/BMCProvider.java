@@ -88,7 +88,7 @@ public class BMCProvider extends ContentProvider {
                 break;
             case STAFF:
                 cursor = db.query(StaffEntry.TABLE_NAME,
-                        projection, null, null, null, null, orderBy);
+                        projection, selection, selectionArgs, null, null, orderBy);
                 break;
             case STAFF_ID:
                 selection = StaffEntry._ID + "=?";
@@ -98,7 +98,7 @@ public class BMCProvider extends ContentProvider {
                 break;
             case VISITOR:
                 cursor = db.query(VisitorEntry.TABLE_NAME,
-                        projection, null, null, null, null, orderBy);
+                        projection, selection, selectionArgs, null, null, orderBy);
                 break;
             case VISITOR_ID:
                 selection = VisitorEntry._ID + "=?";

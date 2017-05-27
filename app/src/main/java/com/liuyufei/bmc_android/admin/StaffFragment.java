@@ -9,8 +9,10 @@ import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +30,10 @@ import com.liuyufei.bmc_android.admin.dummy.DummyContent.DummyItem;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Staff;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 
 /**
  * A fragment representing a list of Items.
@@ -35,7 +41,7 @@ import com.liuyufei.bmc_android.model.Staff;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class StaffFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>{
+public class StaffFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private OnListFragmentInteractionListener mListener;
 
@@ -62,24 +68,23 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getLoaderManager().initLoader(URL_LOADER, null, this);
         setHasOptionsMenu(true);
     }
 
 
-
     Cursor cursor;
     StaffCursorAdapter adapter;
+    ListView lv;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        getLoaderManager().initLoader(URL_LOADER, null, this);
         View view = inflater.inflate(R.layout.fragment_staff_list, container, false);
         contentResolver = view.getContext().getContentResolver();
-
-        ListView lv = (ListView) view;
-
-        adapter = new StaffCursorAdapter(view.getContext(), cursor, false);
+        lv = (ListView) view;
+        adapter = new StaffCursorAdapter(getContext(), cursor, false);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -123,15 +128,48 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         mListener = null;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Loader<Cursor> lc = new CursorLoader(
-                getContext(),
-                BMCContract.StaffEntry.CONTENT_URI, null, null, null, null);
+        //change selection
+        Log.i("onCreateLoader", "onCreateLoader selection changed");
+        Uri resourceUri = BMCContract.StaffEntry.CONTENT_URI;
+        String[] selectionArgs = null;
+        String selection = "";
+        String orderBy = null;
+        List<String> projection = new ArrayList<>();
+
+        if (args != null) {
+            selectionArgs = args.getStringArray("selectionArgs");
+            selection = args.getString("selection");
+            String table = args.getString("table");
+
+            switch (table) {
+                case BMCContract.StaffEntry.TABLE_NAME:
+                    projection = Arrays.asList(
+                            BMCContract.StaffEntry.COLUMN_NAME,
+                            BMCContract.StaffEntry.TABLE_NAME+"."+BMCContract.StaffEntry._ID,
+                            BMCContract.StaffEntry.COLUMN_DEPARTMENT,
+                            BMCContract.StaffEntry.COLUMN_PHOTO,
+                            BMCContract.StaffEntry.COLUMN_TITLE
+                    );
+                    resourceUri = BMCContract.StaffEntry.CONTENT_URI;
+                    orderBy = BMCContract.StaffEntry.COLUMN_NAME;
+                    break;
+                case BMCContract.VisitorEntry.TABLE_NAME:
+                    resourceUri = BMCContract.VisitorEntry.CONTENT_URI;
+                    break;
+                case BMCContract.AppointmentEntry.TABLE_NAME:
+                    resourceUri = BMCContract.AppointmentEntry.CONTENT_URI;
+                    break;
+            }
+        }
+
+        String[] projectionArray = new String[projection.size()];
+        Loader<Cursor> lc = new CursorLoader(getActivity(), resourceUri, projection.toArray(projectionArray), selection, selectionArgs, orderBy);
         return lc;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         adapter.swapCursor(data);
@@ -142,7 +180,8 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         adapter.swapCursor(null);
     }
 
-
+    Handler handler = new Handler();
+    boolean canRun = true;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -152,13 +191,30 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Log.i("Search","onQueryTextSubmit....");
-                return false;
+                return true;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.i("Search","onQueryTextChange....");
+            public boolean onQueryTextChange(final String newText) {
+                if (newText.length() >=1) {
+                    if (canRun) {
+                        canRun = false;
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                canRun = true;
+                                String selection = BMCContract.StaffEntry.COLUMN_NAME + " like ?";
+                                String[] selectionArgs = {"%"+newText+"%"};
+                                Bundle bundle = new Bundle();
+                                bundle.putString("selection", selection);
+                                bundle.putStringArray("selectionArgs", selectionArgs);
+                                bundle.putString("table", BMCContract.StaffEntry.TABLE_NAME);
+                                getLoaderManager().restartLoader(URL_LOADER, bundle, StaffFragment.this);
+                            }
+                        }, 1000);
+                    }
+                }
+                getLoaderManager().restartLoader(URL_LOADER, null, StaffFragment.this);
                 return false;
             }
         });

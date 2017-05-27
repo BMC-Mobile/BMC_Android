@@ -10,7 +10,7 @@ import static com.liuyufei.bmc_android.data.BMCContract.*;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "todosapp.db";
+    private static final String DATABASE_NAME = "BMC.db";
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE_STAFF_CREATE =
@@ -66,7 +66,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
 
         db.insert(StaffEntry.TABLE_NAME, null, values);
-//        values.clear();
+        values.clear();
+
+        values.put(StaffEntry.COLUMN_DEPARTMENT, "China");
+        values.put(StaffEntry.COLUMN_NAME, "Xi");
+        values.put(StaffEntry.COLUMN_MOBILE, "123456");
+        values.put(StaffEntry.COLUMN_TITLE, "President");
+        values.put(StaffEntry.COLUMN_PHOTO, "PathTOPhoto");
+        db.insert(StaffEntry.TABLE_NAME, null, values);
+
+
+
 //        values.put(TodosEntry.COLUMN_CATEGORY, String.valueOf(idCat));
 //        values.put(TodosEntry.COLUMN_TEXT, "Welcome to Todos!");
 //        long idTodo = db.insert(TodosEntry.TABLE_NAME, null, values);
