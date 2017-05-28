@@ -102,7 +102,7 @@ public class AdminActivity extends AppCompatActivity
         } else if (id == R.id.nav_send) {
 
         } else if (id == R.id.statistic) {
-            startActivity(new Intent(this,Statistic.class));
+            goBarCharFragment();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,7 +110,15 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-
+    private void goBarCharFragment() {
+        fab.hide();
+        Fragment fragment = new BarChartFragment();
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+    }
 
 
     private void goStaffFragment() {

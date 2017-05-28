@@ -31,7 +31,6 @@
             android:authorities="com.bmc.dataprovider"
             android:exported="false" />
 
-        <activity android:name=".admin.Statistic"></activity>
     </application>
 
 </manifest>
