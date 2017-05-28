@@ -2,35 +2,37 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/staffMag"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Staff" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Appointment" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Visitors" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
-    </group>
-
-    <item android:title="Communicate">
+    <item android:title="Statistic">
         <menu>
             <item
                 android:id="@+id/statistic_visitor"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/barchart"
                 android:title="Statistic of Visitor" />
             <item
                 android:id="@+id/statistic_appointment"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@drawable/piechart"
                 android:title="Statistic of Appointment" />
+        </menu>
+    </item>
+
+    <item android:title="Management">
+        <menu>
+            <item
+                android:id="@+id/staffMag"
+                android:icon="@drawable/staff_icon"
+                android:title="Staff" />
+            <item
+                android:id="@+id/nav_gallery"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="Appointment" />
+            <item
+                android:id="@+id/nav_slideshow"
+                android:icon="@drawable/visitors_icon"
+                android:title="Visitors" />
+            <item
+                android:id="@+id/nav_manage"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Tools" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
