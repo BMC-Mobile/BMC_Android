@@ -22,19 +22,19 @@
                 android:icon="@drawable/staff_icon"
                 android:title="Staff" />
             <item
-                android:id="@+id/nav_gallery"
+                android:id="@+id/appointmentMag"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="Appointment" />
             <item
-                android:id="@+id/nav_slideshow"
+                android:id="@+id/visitorMag"
                 android:icon="@drawable/visitors_icon"
                 android:title="Visitors" />
             <item
-                android:id="@+id/nav_manage"
+                android:id="@+id/tools"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="Tools" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/logout"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Logout" />
         </menu>

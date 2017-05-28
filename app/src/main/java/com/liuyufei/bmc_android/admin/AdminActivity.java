@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,6 +21,11 @@ public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, StaffFragment.OnListFragmentInteractionListener {
 
 
+    public static final String STAFF = "staff";
+    public static final String APPOINTMENT = "appointment";
+    public static final String PIE = "pie";
+    public static final String BAR = "bar";
+    public static final String VISITOR = "visitor";
     FloatingActionButton fab;
 
     @Override
@@ -45,11 +49,6 @@ public class AdminActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-//        fab.hide();
-
-        //default go to staff fragment
-//        goStaffFragment();
     }
 
     @Override
@@ -85,26 +84,25 @@ public class AdminActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.staffMag) {
-            goStaffFragment();
-        } else if (id == R.id.nav_gallery) {
+            goManagementFragment(STAFF);
+        } else if (id == R.id.tools) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.visitorMag) {
+            goManagementFragment(VISITOR);
+        } else if (id == R.id.appointmentMag) {
+            goManagementFragment(APPOINTMENT);
+        } else if (id == R.id.logout) {
 
         } else if (id == R.id.statistic_appointment) {
-            goCharFragment("pie");
+            goCharFragment(PIE);
         }else if (id == R.id.statistic_visitor) {
-            goCharFragment("bar");
+            goCharFragment(BAR);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -112,12 +110,10 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-
-
     private void goCharFragment(String chartType) {
         fab.hide();
         Fragment fragment;
-        if("bar".equals(chartType)){
+        if(BAR.equals(chartType)){
             fragment = new BarChartFragment();
         }else{
             fragment = new PieChartFragment();
@@ -131,23 +127,25 @@ public class AdminActivity extends AppCompatActivity
     }
 
 
-    private void goStaffFragment() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Add Staff", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+    private void goManagementFragment(String mangType) {
+        Fragment fragment = null;
+        if(STAFF.equals(mangType)){
+            fragment = new StaffFragment();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AdminActivity.this,EditStaffActivity.class);
+                    startActivity(intent);
+                }
+            });
+            fab.show();
+        }else if(APPOINTMENT.equals(mangType)){
+            fragment = new AppointmentFragment();
+        }else if(VISITOR.equals(mangType)){
+            fragment = new VisitorFragment();
+        }
 
-                Intent intent = new Intent(AdminActivity.this,EditStaffActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        fab.show();
-
-        Fragment fragment = new StaffFragment();
         Bundle args = new Bundle();
-//            args.putInt(StaffFragment.ARG_PLANET_NUMBER, position);
         args.putInt("position", 1);
         fragment.setArguments(args);
 
