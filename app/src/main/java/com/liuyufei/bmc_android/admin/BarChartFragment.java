@@ -62,7 +62,7 @@ public class BarChartFragment extends Fragment {
         xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
         xAxis.setValueFormatter(formatter);
 
-        BarDataSet dataset = new BarDataSet(entries, "Appointment in One Week");
+        BarDataSet dataset = new BarDataSet(entries, "Visitors in One Week");
 
         dataset.setColors(new int[]{
                 R.color.green,

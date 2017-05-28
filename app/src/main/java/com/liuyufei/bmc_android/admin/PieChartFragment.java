@@ -38,7 +38,7 @@ public class PieChartFragment extends Fragment {
         entries.add(new PieEntry(30.8f, "Blue"));
         entries.add(new PieEntry(10.8f, "Purple"));
 
-        PieDataSet set = new PieDataSet(entries, "Election Results");
+        PieDataSet set = new PieDataSet(entries, "Appointment in a Week");
 
         set.setColors(new int[]{
                 R.color.green,
