@@ -14,6 +14,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.liuyufei.bmc_android.R;
 
 import java.util.ArrayList;
 
@@ -61,13 +62,21 @@ public class BarChartFragment extends Fragment {
         xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
         xAxis.setValueFormatter(formatter);
 
-        BarDataSet dataset = new BarDataSet(entries, "# of Calls");
+        BarDataSet dataset = new BarDataSet(entries, "Appointment in One Week");
+
+        dataset.setColors(new int[]{
+                R.color.green,
+                R.color.yellow,
+                R.color.red,
+                R.color.blue,
+                R.color.purple
+        },chart.getContext());
 
         BarData data = new BarData(dataset);
         chart.setData(data);
-        Description description = new Description();
-        description.setText("# of times Alice called Bob");
-        chart.setDescription(description);
+//        Description description = new Description();
+//        description.setText("# of times Alice called Bob");
+//        chart.setDescription(description);
 
         return chart;
     }

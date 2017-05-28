@@ -101,8 +101,10 @@ public class AdminActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        } else if (id == R.id.statistic) {
-            goBarCharFragment();
+        } else if (id == R.id.statistic_appointment) {
+            goCharFragment("pie");
+        }else if (id == R.id.statistic_visitor) {
+            goCharFragment("bar");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -110,9 +112,17 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-    private void goBarCharFragment() {
+
+
+    private void goCharFragment(String chartType) {
         fab.hide();
-        Fragment fragment = new BarChartFragment();
+        Fragment fragment;
+        if("bar".equals(chartType)){
+            fragment = new BarChartFragment();
+        }else{
+            fragment = new PieChartFragment();
+        }
+
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()

@@ -24,9 +24,13 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/statistic"
+                android:id="@+id/statistic_visitor"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Statistic" />
+                android:title="Statistic of Visitor" />
+            <item
+                android:id="@+id/statistic_appointment"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Statistic of Appointment" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"
