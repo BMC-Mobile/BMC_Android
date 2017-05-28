@@ -42,8 +42,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + VisitorEntry.TABLE_NAME + " (" +
                     VisitorEntry._ID + " INTEGER PRIMARY KEY, " +
                     VisitorEntry.COLUMN_NAME + " TEXT, " +
-                    VisitorEntry.COLUMN_CREATION_TIME + " TEXT default CURRENT_TIMESTAMP, " +
-                    VisitorEntry.COLUMN_LASTLOGIN_TIME + " TEXT default CURRENT_TIMESTAMP, " +
+                    VisitorEntry.COLUMN_CREATION_TIME + " datetime default CURRENT_TIMESTAMP, " +
+                    VisitorEntry.COLUMN_LASTLOGIN_TIME + " datetime default CURRENT_TIMESTAMP, " +
                     VisitorEntry.COLUMN_BUSINESS_NAME + " TEXT, " +
                     VisitorEntry.COLUMN_MOBILE + " TEXT " +
                     ")";
@@ -52,7 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + AppointmentEntry.TABLE_NAME + " (" +
                     AppointmentEntry._ID + " INTEGER PRIMARY KEY, " +
                     AppointmentEntry.COLUMN_DESCRIPTION + " TEXT, " +
-                    AppointmentEntry.COLUMN_DATETIME + " TEXT default CURRENT_TIMESTAMP, " +
+                    AppointmentEntry.COLUMN_DATETIME + " datetime default CURRENT_TIMESTAMP, " +
                     AppointmentEntry.COLUMN_STAFF + " INTEGER NOT NULL, " +
                     AppointmentEntry.COLUMN_VISITOR + " INTEGER NOT NULL, " +
                     " FOREIGN KEY(" + AppointmentEntry.COLUMN_VISITOR + ") REFERENCES " + VisitorEntry.TABLE_NAME + "(" + VisitorEntry._ID + "), " +
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void initData(SQLiteDatabase db) {
         Log.i("DatabaseHelper", "init data...");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:MM:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         ContentValues values = new ContentValues();
 
@@ -121,7 +121,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(AppointmentEntry.COLUMN_STAFF, staff);
             values.put(AppointmentEntry.COLUMN_VISITOR, visitor);
             cal.setTime(new Date());
-            cal.add(Calendar.DAY_OF_YEAR,-i);
+            if(i%3==0){
+                cal.add(Calendar.DAY_OF_YEAR,-i-1);
+            }else{
+                cal.add(Calendar.DAY_OF_YEAR,-i);
+            }
             values.put(AppointmentEntry.COLUMN_DATETIME, dateFormat.format(cal.getTime()));
             visitorsID.add(db.insert(AppointmentEntry.TABLE_NAME, null, values));
             values.clear();
