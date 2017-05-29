@@ -1,24 +1,19 @@
 package com.liuyufei.bmc_android.admin;
 
 
+import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.liuyufei.bmc_android.R;
@@ -32,6 +27,8 @@ import java.util.List;
  */
 public class BarChartFragment extends Fragment {
 
+
+    public static final int days = 7;
 
     public BarChartFragment() {
     }
@@ -58,32 +55,32 @@ public class BarChartFragment extends Fragment {
 
         //show new visitors last 7 days
         Cursor cursor_new = getActivity().getContentResolver()
-                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionNewVisitors, selectArgs, "lasttime desc limit 7");
+                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionNewVisitors, selectArgs, "lasttime desc limit "+days);
 
         //show old visitors 7 days
         Cursor cursor_old = getActivity().getContentResolver()
-                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionOldVisitors, selectArgs, "lasttime desc limit 7");
+                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionOldVisitors, selectArgs, "lasttime desc limit "+days);
 
 
+        for (int i = 0; i < days; i++) {
+            if (cursor_new.moveToNext()) {
+                newVisitors.add(new Entry(i, Integer.parseInt(cursor_new.getString(0))));
+            } else {
+                newVisitors.add(new Entry(i, 0));
+            }
 
-        //todo problem id data is null
-        int span = 0;
-        while (cursor_new.moveToNext()) {
-            newVisitors.add(new Entry(span++, Integer.parseInt(cursor_new.getString(0))));
-
-        }
-
-        //todo problem id data is null
-        int span_old = 0;
-        while (cursor_old.moveToNext()) {
-            oldVisitors.add(new Entry(span_old++, Integer.parseInt(cursor_new.getString(0))));
+            if (cursor_old.moveToNext()) {
+                oldVisitors.add(new Entry(i, Integer.parseInt(cursor_old.getString(0))));
+            } else {
+                oldVisitors.add(new Entry(i, 0));
+            }
         }
 
         LineDataSet newVisitorSet = new LineDataSet(newVisitors, "New Visitors");
         newVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
-//        LineDataSet oldVisitorSet = new LineDataSet(oldVisitors, "Old Visitors");
-//        oldVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        LineDataSet oldVisitorSet = new LineDataSet(oldVisitors, "Old Visitors");
+        oldVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
 
         // the labels that should be drawn on the XAxis
@@ -109,16 +106,16 @@ public class BarChartFragment extends Fragment {
         newVisitorSet.setColors(new int[]{
                 R.color.red,
         }, mLineChart.getContext());
-//
-//        oldVisitorSet.setColors(new int[]{
-//                R.color.blue,
-//        }, mLineChart.getContext());
+
+        oldVisitorSet.setColors(new int[]{
+                R.color.blue,
+        }, mLineChart.getContext());
 
 
         // use the interface ILineDataSet
         List<ILineDataSet> dataSets = new ArrayList<>();
         dataSets.add(newVisitorSet);
-//        dataSets.add(oldVisitorSet);
+        dataSets.add(oldVisitorSet);
 
         LineData data = new LineData(dataSets);
         mLineChart.setData(data);
