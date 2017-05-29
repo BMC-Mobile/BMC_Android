@@ -1,6 +1,7 @@
 package com.liuyufei.bmc_android.admin;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,13 +11,21 @@ import android.view.ViewGroup;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.liuyufei.bmc_android.R;
+import com.liuyufei.bmc_android.data.BMCContract;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,54 +40,95 @@ public class BarChartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        List<Entry> newVisitors = new ArrayList<>();
+        List<Entry> oldVisitors = new ArrayList<>();
+
         // Inflate the layout for this fragment
-        com.github.mikephil.charting.charts.BarChart chart = new com.github.mikephil.charting.charts.BarChart(this.getActivity());
+        com.github.mikephil.charting.charts.LineChart mLineChart = new com.github.mikephil.charting.charts.LineChart(this.getActivity());
+
+        String selectionNewVisitors = BMCContract.VisitorEntry.COLUMN_LASTLOGIN_TIME + " == " + BMCContract.VisitorEntry.COLUMN_CREATION_TIME + " GROUP BY lasttime";
+        String selectionOldVisitors = BMCContract.VisitorEntry.COLUMN_LASTLOGIN_TIME + " != " + BMCContract.VisitorEntry.COLUMN_CREATION_TIME + " GROUP BY lasttime";
+        String[] selectArgs = null;
+        String[] projection = {
+                "count(" + BMCContract.VisitorEntry.TABLE_NAME + "._id)",
+                "strftime('%d-%m-%Y', " + BMCContract.VisitorEntry.COLUMN_LASTLOGIN_TIME + ") as lasttime"
+
+        };
+
+        //show new visitors last 7 days
+        Cursor cursor_new = getActivity().getContentResolver()
+                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionNewVisitors, selectArgs, "lasttime desc limit 7");
+
+        //show old visitors 7 days
+        Cursor cursor_old = getActivity().getContentResolver()
+                .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionOldVisitors, selectArgs, "lasttime desc limit 7");
+
+
+
+        //todo problem id data is null
+        int span = 0;
+        while (cursor_new.moveToNext()) {
+            newVisitors.add(new Entry(span++, Integer.parseInt(cursor_new.getString(0))));
+
+        }
+
+        //todo problem id data is null
+        int span_old = 0;
+        while (cursor_old.moveToNext()) {
+            oldVisitors.add(new Entry(span_old++, Integer.parseInt(cursor_new.getString(0))));
+        }
+
+        LineDataSet newVisitorSet = new LineDataSet(newVisitors, "New Visitors");
+        newVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+
+//        LineDataSet oldVisitorSet = new LineDataSet(oldVisitors, "Old Visitors");
+//        oldVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
 
         // the labels that should be drawn on the XAxis
-        final ArrayList<String> labels = new ArrayList<String>();
-        labels.add("Monday");
-        labels.add("Tuesday");
-        labels.add("Wednesday");
-        labels.add("Thursday");
-        labels.add("Friday");
-
-        ArrayList<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0,4f));
-        entries.add(new BarEntry(1,8f));
-        entries.add(new BarEntry(2,6f));
-        entries.add(new BarEntry(3,12f));
-        entries.add(new BarEntry(4,18f));
-
+        final String[] quarters = new String[]{"Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"};
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return labels.get((int) value);
+                return quarters[(int) value];
             }
         };
 
-        XAxis xAxis = chart.getXAxis();
+        XAxis xAxis = mLineChart.getXAxis();
         xAxis.setGranularity(1f); // minimum axis-step (interval) is 1
         xAxis.setValueFormatter(formatter);
 
-        BarDataSet dataset = new BarDataSet(entries, "Visitors in One Week");
+        YAxis left = mLineChart.getAxisLeft();
+        left.setDrawAxisLine(false); // no axis line
+        left.setDrawGridLines(false);
+        left.setGranularity(1f); // interval 1
+        mLineChart.getAxisRight().setEnabled(false); // no right axis
 
-        dataset.setColors(new int[]{
-                R.color.green,
-                R.color.yellow,
+        newVisitorSet.setColors(new int[]{
                 R.color.red,
-                R.color.blue,
-                R.color.purple
-        },chart.getContext());
+        }, mLineChart.getContext());
+//
+//        oldVisitorSet.setColors(new int[]{
+//                R.color.blue,
+//        }, mLineChart.getContext());
 
-        BarData data = new BarData(dataset);
-        chart.setData(data);
-//        Description description = new Description();
-//        description.setText("# of times Alice called Bob");
-//        chart.setDescription(description);
 
-        return chart;
+        // use the interface ILineDataSet
+        List<ILineDataSet> dataSets = new ArrayList<>();
+        dataSets.add(newVisitorSet);
+//        dataSets.add(oldVisitorSet);
+
+        LineData data = new LineData(dataSets);
+        mLineChart.setData(data);
+        mLineChart.invalidate(); // refresh
+
+        return mLineChart;
     }
 
 }
+//    new visitors in last week
+//    select count(*),strftime("%Y-%m-%d",last_login_time) as lastTime from  bmc_visitor where creation_time == last_login_time group by lastTime limit 7
+//    old visitors in last week
+//    select count(*),strftime("%Y-%m-%d",last_login_time) as lastTime from  bmc_visitor where creation_time != last_login_time group by lastTime limit 7
