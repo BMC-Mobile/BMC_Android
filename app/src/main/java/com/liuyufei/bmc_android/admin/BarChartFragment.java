@@ -19,7 +19,11 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.data.BMCContract;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -62,7 +66,15 @@ public class BarChartFragment extends Fragment {
                 .query(BMCContract.VisitorEntry.CONTENT_URI, projection, selectionOldVisitors, selectArgs, "lasttime desc limit "+days);
 
 
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM");
+        Calendar calendar = Calendar.getInstance();
+
+        final List<String> xAxisValues = new ArrayList<>();
+
         for (int i = 0; i < days; i++) {
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_YEAR,-i);
+            xAxisValues.add(dateFormat.format(calendar.getTime()));
             if (cursor_new.moveToNext()) {
                 newVisitors.add(new Entry(i, Integer.parseInt(cursor_new.getString(0))));
             } else {
@@ -83,13 +95,10 @@ public class BarChartFragment extends Fragment {
         oldVisitorSet.setAxisDependency(YAxis.AxisDependency.LEFT);
 
 
-        // the labels that should be drawn on the XAxis
-        final String[] quarters = new String[]{"Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"};
-
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return quarters[(int) value];
+                return xAxisValues.get((int) value);
             }
         };
 

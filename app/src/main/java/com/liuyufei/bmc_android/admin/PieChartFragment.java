@@ -39,7 +39,7 @@ public class PieChartFragment extends Fragment {
         String[] selectArgs = null;
         String[] projection = {
                 "count("+ BMCContract.AppointmentEntry.TABLE_NAME+"._id)",
-                "strftime('%d-%m-%Y', "+BMCContract.AppointmentEntry.COLUMN_DATETIME+") as appdate"
+                "strftime('%d/%m', "+BMCContract.AppointmentEntry.COLUMN_DATETIME+") as appdate"
 
         };
 
