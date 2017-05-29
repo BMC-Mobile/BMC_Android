@@ -6,13 +6,51 @@
     android:layout_height="match_parent"
     tools:context="com.liuyufei.bmc_android.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+
+    <RelativeLayout
+        android:layout_width="376dp"
+        android:layout_height="508dp"
+        tools:layout_editor_absoluteY="-5dp"
+        android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="0dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/pwd_value"
+            android:layout_alignBottom="@+id/pwd_value"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:text="Password"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            tools:layout_editor_absoluteX="66dp"
+            tools:layout_editor_absoluteY="305dp"
+            android:layout_marginBottom="194dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignEnd="@+id/pwd_value" />
+
+        <EditText
+            android:id="@+id/pwd_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/login_btn"
+            android:layout_marginBottom="70dp"
+            android:layout_marginStart="22dp"
+            android:layout_toEndOf="@+id/textView2"
+            android:ems="10"
+            android:inputType="textPersonName" />
+
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

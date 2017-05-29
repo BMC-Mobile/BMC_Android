@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 
 public class AdminActivity extends AppCompatActivity
@@ -98,7 +99,8 @@ public class AdminActivity extends AppCompatActivity
         } else if (id == R.id.appointmentMag) {
             goManagementFragment(APPOINTMENT);
         } else if (id == R.id.logout) {
-
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
         } else if (id == R.id.statistic_appointment) {
             goCharFragment(PIE);
         }else if (id == R.id.statistic_visitor) {
