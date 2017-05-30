@@ -29,10 +29,10 @@
                 android:id="@+id/visitorMag"
                 android:icon="@drawable/visitors_icon"
                 android:title="Visitors" />
-            <item
-                android:id="@+id/tools"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="Tools" />
+            <!--<item-->
+                <!--android:id="@+id/tools"-->
+                <!--android:icon="@drawable/ic_menu_manage"-->
+                <!--android:title="Tools" />-->
             <item
                 android:id="@+id/logout"
                 android:icon="@drawable/ic_menu_send"

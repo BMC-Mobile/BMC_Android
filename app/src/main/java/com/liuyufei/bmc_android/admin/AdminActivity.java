@@ -92,7 +92,7 @@ public class AdminActivity extends AppCompatActivity
 
         if (id == R.id.staffMag) {
             goManagementFragment(STAFF);
-        } else if (id == R.id.tools) {
+//        } else if (id == R.id.tools) {
 
         } else if (id == R.id.visitorMag) {
             goManagementFragment(VISITOR);
