@@ -3,7 +3,9 @@ package com.liuyufei.bmc_android.admin;
 
 import android.app.LoaderManager;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +29,10 @@ import android.widget.SearchView;
 
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.data.BMCContract;
+import com.liuyufei.bmc_android.data.BMCQueryHandler;
 import com.liuyufei.bmc_android.model.Staff;
+
+import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,26 +65,38 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
         lv = (ListView) view;
         adapter = new VisitorCursorAdapter(getContext(), cursor, false);
         lv.setAdapter(adapter);
-//        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
-//                //move the cursor to the selected row
-//                cursor = (Cursor) adapterView.getItemAtPosition(pos);
-//                //get the object data from the cursor
-//                int staffID = cursor.getInt(cursor.getColumnIndex(BMCContract.StaffEntry._ID));
-//                String staffMobile = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_MOBILE));
-//                String staffName = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
-//                String staffPhoto = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_PHOTO));
-//                String staffDepartment = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_DEPARTMENT));
-//                String staffTitle = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_TITLE));
-//                //create the object that will be passed to the todoActivity
-//                Staff staff = new Staff(staffID, staffName, staffPhoto, staffDepartment, staffTitle, staffMobile);
-//                Intent intent = new Intent(getActivity(), EditStaffActivity.class);
-//                //pass the ID to the todoActivity
-//                intent.putExtra("staff", staff);
-//                startActivity(intent);
-//            }
-//        });
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long id) {
+                //move the cursor to the selected row
+                cursor = (Cursor) adapterView.getItemAtPosition(pos);
+                //get the object data from the cursor
+                final int visitorID = cursor.getInt(cursor.getColumnIndex(BMCContract.VisitorEntry._ID));
+                String visitorName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME));
+
+
+                //confirm?
+                new AlertDialog.Builder(VisitorFragment.this.getActivity())
+                        .setTitle("Confirm Checkout?")
+                        .setMessage("Confirm help "+visitorName+" checkout?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //update checkout status
+                                Uri uri =  Uri.withAppendedPath(BMCContract.VisitorEntry.CONTENT_URI, String.valueOf(visitorID));
+                                String selection = BMCContract.VisitorEntry._ID + "=?";
+                                String[] arguments = new String[1];
+                                arguments[0] = String.valueOf(visitorID);
+                                BMCQueryHandler queryHandler =  new BMCQueryHandler(VisitorFragment.this.getActivity().getContentResolver());
+                                ContentValues values = new ContentValues();
+                                values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, "0");
+                                queryHandler.startUpdate(1, null, uri,values, selection, arguments);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+
+            }
+        });
 
         return view;
     }
@@ -89,8 +107,8 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
         //change selection
         Log.i("onCreateLoader", "onCreateLoader selection changed");
         Uri resourceUri = BMCContract.VisitorEntry.CONTENT_URI;
-        String[] selectionArgs = null;
-        String selection = "";
+        String[] selectionArgs = {CHECKIN.toString()};
+        String selection = BMCContract.VisitorEntry.COLUMN_CHECK_STATUS+"=?";
         String orderBy = null;
 
         if (args != null) {
@@ -99,6 +117,7 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
             resourceUri = BMCContract.VisitorEntry.CONTENT_URI;
         }
 
+        //filter visitors who forget to checkout
         Loader<Cursor> lc = new CursorLoader(getActivity(), resourceUri, null, selection, selectionArgs, orderBy);
         return lc;
     }

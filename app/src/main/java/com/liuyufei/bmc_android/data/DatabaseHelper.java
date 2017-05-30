@@ -4,24 +4,23 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.icu.text.DateFormat;
-import android.icu.text.SimpleDateFormat;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.liuyufei.bmc_android.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
-import static com.liuyufei.bmc_android.data.BMCContract.*;
+import static com.liuyufei.bmc_android.data.BMCContract.AppointmentEntry;
+import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
+import static com.liuyufei.bmc_android.data.BMCContract.StaffEntry;
+import static com.liuyufei.bmc_android.data.BMCContract.VisitorEntry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -45,8 +44,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     VisitorEntry.COLUMN_CREATION_TIME + " datetime default CURRENT_TIMESTAMP, " +
                     VisitorEntry.COLUMN_LASTLOGIN_TIME + " datetime default CURRENT_TIMESTAMP, " +
                     VisitorEntry.COLUMN_BUSINESS_NAME + " TEXT, " +
-                    VisitorEntry.COLUMN_MOBILE + " TEXT " +
-                    ")";
+                    VisitorEntry.COLUMN_MOBILE + " TEXT, " +
+                    VisitorEntry.COLUMN_CHECK_STATUS + " INTEGER default " +CHECKOUT+
+                    " )";
 
     private static final String TABLE_APPOINTMENT_CREATE =
             "CREATE TABLE " + AppointmentEntry.TABLE_NAME + " (" +
@@ -75,7 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private void initData(SQLiteDatabase db) {
         Log.i("DatabaseHelper", "init data...");
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();
         ContentValues values = new ContentValues();
 
@@ -105,7 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cal.add(Calendar.DAY_OF_YEAR,-i-5);
             values.put(VisitorEntry.COLUMN_CREATION_TIME, dateFormat.format(cal.getTime()));
             values.put(VisitorEntry.COLUMN_LASTLOGIN_TIME, dateFormat.format(cal.getTime()));
-
+            if(i%2==0) values.put(VisitorEntry.COLUMN_CHECK_STATUS,1);
             visitorsID.add(db.insert(VisitorEntry.TABLE_NAME, null, values));
             values.clear();
         }

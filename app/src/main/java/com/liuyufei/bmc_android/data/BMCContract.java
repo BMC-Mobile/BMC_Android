@@ -11,6 +11,10 @@ public final class BMCContract {
     public static final String PATH_BMC_VISITOR="VISITOR";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
+
+    public static final Integer CHECKOUT = 0;
+    public static final Integer CHECKIN = 1;
+
     public String concatContent(String path){
         return "content://" + path;
     }
@@ -53,5 +57,6 @@ public final class BMCContract {
         public static final String COLUMN_MOBILE = "mobile";
         public static final String COLUMN_CREATION_TIME = "creation_time";
         public static final String COLUMN_LASTLOGIN_TIME = "last_login_time";
+        public static final String COLUMN_CHECK_STATUS = "status";
     }
 }

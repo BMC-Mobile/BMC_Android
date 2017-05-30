@@ -180,11 +180,11 @@ public class BMCProvider extends ContentProvider {
             selection, @Nullable String[] selectionArgs) {
         int match = uriMatcher.match(uri);
         switch (match) {
-            case STAFF:
+            case STAFF_ID:
                 return updateRecord(uri, values, selection, selectionArgs, StaffEntry.TABLE_NAME);
-            case VISITOR:
+            case VISITOR_ID:
                 return updateRecord(uri, values, selection, selectionArgs, VisitorEntry.TABLE_NAME);
-            case APPOINTMENT:
+            case APPOINTMENT_ID:
                 return updateRecord(uri, values, selection, selectionArgs, AppointmentEntry.TABLE_NAME);
             default:
                 throw new IllegalArgumentException("Update unknown URI: " + uri);
@@ -199,6 +199,7 @@ public class BMCProvider extends ContentProvider {
             Log.e("Error", "update error for URI " + uri);
             return -1;
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return id;
     }
 }
