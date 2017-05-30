@@ -19,7 +19,7 @@ import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 
 public class AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, StaffFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
 
     public static final String STAFF = "staff";
