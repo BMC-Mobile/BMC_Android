@@ -15,6 +15,8 @@ public class Visitor implements Serializable {
     public final ObservableField<String> lastlogintime = new ObservableField<String>();
 
 
+
+
     public Visitor(int id,String name,String bussinessname,String mobile,String creationtime,String lastlogintime){
         this.id.set(id);
         this.name.set(name);

@@ -84,14 +84,14 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
 
                             public void onClick(DialogInterface dialog, int whichButton) {
                                 //update checkout status
-                                Uri uri =  Uri.withAppendedPath(BMCContract.VisitorEntry.CONTENT_URI, String.valueOf(visitorID));
+//                                Uri uri =  Uri.withAppendedPath(BMCContract.VisitorEntry.CONTENT_URI, String.valueOf(visitorID));
                                 String selection = BMCContract.VisitorEntry._ID + "=?";
                                 String[] arguments = new String[1];
                                 arguments[0] = String.valueOf(visitorID);
                                 BMCQueryHandler queryHandler =  new BMCQueryHandler(VisitorFragment.this.getActivity().getContentResolver());
                                 ContentValues values = new ContentValues();
                                 values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, "0");
-                                queryHandler.startUpdate(1, null, uri,values, selection, arguments);
+                                queryHandler.startUpdate(1, null, BMCContract.VisitorEntry.CONTENT_URI,values, selection, arguments);
                             }})
                         .setNegativeButton(android.R.string.no, null).show();
 
