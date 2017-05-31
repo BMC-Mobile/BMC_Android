@@ -30,7 +30,7 @@ public class VisitorCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         TextView visitorName = (TextView) view.findViewById(R.id.visitorName);
-        int textColumn = cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME);
+        int textColumn = cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME);
         String text = cursor.getString(textColumn);
         visitorName.setText(text);
 

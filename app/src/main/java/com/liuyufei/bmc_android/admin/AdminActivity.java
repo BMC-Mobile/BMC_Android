@@ -22,11 +22,11 @@ public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
-    public static final String STAFF = "staff";
-    public static final String APPOINTMENT = "appointment";
-    public static final String PIE = "pie";
-    public static final String BAR = "bar";
-    public static final String VISITOR = "visitor";
+    public static final String STAFF = "Staff";
+    public static final String APPOINTMENT = "Appointment";
+    public static final String PIE = "Pie";
+    public static final String BAR = "Bar";
+    public static final String VISITOR = "Visitor";
     FloatingActionButton fab;
 
     @Override
@@ -121,6 +121,7 @@ public class AdminActivity extends AppCompatActivity
             fragment = new PieChartFragment();
         }
 
+        setTitle(chartType);
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
@@ -150,7 +151,7 @@ public class AdminActivity extends AppCompatActivity
         Bundle args = new Bundle();
         args.putInt("position", 1);
         fragment.setArguments(args);
-
+        setTitle(mangType);
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
