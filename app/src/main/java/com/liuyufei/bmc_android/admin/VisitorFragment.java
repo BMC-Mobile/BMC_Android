@@ -33,6 +33,7 @@ import com.liuyufei.bmc_android.data.BMCQueryHandler;
 import com.liuyufei.bmc_android.model.Staff;
 
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
+import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -90,7 +91,7 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
                                 arguments[0] = String.valueOf(visitorID);
                                 BMCQueryHandler queryHandler =  new BMCQueryHandler(VisitorFragment.this.getActivity().getContentResolver());
                                 ContentValues values = new ContentValues();
-                                values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, "0");
+                                values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, CHECKOUT);
                                 queryHandler.startUpdate(1, null, BMCContract.VisitorEntry.CONTENT_URI,values, selection, arguments);
                             }})
                         .setNegativeButton(android.R.string.no, null).show();

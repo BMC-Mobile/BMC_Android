@@ -26,7 +26,7 @@ public final class BMCContract {
         public static final String TABLE_NAME = "BMC_STAFF";
         //column (field) names
         public static final String _ID = BaseColumns._ID;
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_NAME = "staff_name";
         public static final String COLUMN_TITLE = "title";
         public static final String COLUMN_MOBILE = "mobile";
         public static final String COLUMN_DEPARTMENT = "department";
@@ -52,7 +52,7 @@ public final class BMCContract {
         public static final String TABLE_NAME = "BMC_VISITOR";
         //column names
         public static final String _ID = BaseColumns._ID;
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_NAME = "visitor_name";
         public static final String COLUMN_BUSINESS_NAME = "business_name";
         public static final String COLUMN_MOBILE = "mobile";
         public static final String COLUMN_CREATION_TIME = "creation_time";

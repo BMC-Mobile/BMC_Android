@@ -25,4 +25,11 @@ public class Visitor implements Serializable {
         this.creationtime.set(creationtime);
         this.lastlogintime.set(lastlogintime);
     }
+
+    public Visitor(int id,String name,String bussinessname,String mobile){
+        this.id.set(id);
+        this.name.set(name);
+        this.bussinessname.set(bussinessname);
+        this.mobile.set(mobile);
+    }
 }

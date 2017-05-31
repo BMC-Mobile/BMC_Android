@@ -13,31 +13,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <activity
             android:name=".SplashScreen"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".MainActivity" />
-
         <activity
             android:name=".admin.AdminActivity"
             android:label="@string/title_activity_admin"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".admin.EditStaffActivity" />
 
         <provider
             android:name=".data.BMCProvider"
             android:authorities="com.bmc.dataprovider"
             android:exported="false" />
+
+        <activity android:name=".admin.AppointmentMgnActivity"></activity>
     </application>
 
 </manifest>
