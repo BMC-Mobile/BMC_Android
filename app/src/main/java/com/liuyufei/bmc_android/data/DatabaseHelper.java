@@ -41,8 +41,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + VisitorEntry.TABLE_NAME + " (" +
                     VisitorEntry._ID + " INTEGER PRIMARY KEY, " +
                     VisitorEntry.COLUMN_NAME + " TEXT, " +
-                    VisitorEntry.COLUMN_CREATION_TIME + " datetime default CURRENT_TIMESTAMP, " +
-                    VisitorEntry.COLUMN_LASTLOGIN_TIME + " datetime default CURRENT_TIMESTAMP, " +
+                    VisitorEntry.COLUMN_CREATION_TIME + " datetime, " +
+                    VisitorEntry.COLUMN_LASTLOGIN_TIME + " datetime, " +
+                    VisitorEntry.COLUMN_LASTLOGOUT_TIME + " datetime, " +
                     VisitorEntry.COLUMN_BUSINESS_NAME + " TEXT, " +
                     VisitorEntry.COLUMN_MOBILE + " TEXT, " +
                     VisitorEntry.COLUMN_CHECK_STATUS + " INTEGER default " +CHECKOUT+
@@ -105,7 +106,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cal.add(Calendar.DAY_OF_YEAR,-i-5);
             values.put(VisitorEntry.COLUMN_CREATION_TIME, dateFormat.format(cal.getTime()));
             values.put(VisitorEntry.COLUMN_LASTLOGIN_TIME, dateFormat.format(cal.getTime()));
-            if(i%2==0) values.put(VisitorEntry.COLUMN_CHECK_STATUS,1);
+            if(i%2==0) {
+                //not logout
+                values.put(VisitorEntry.COLUMN_CHECK_STATUS,1);
+            }else{
+                values.put(VisitorEntry.COLUMN_LASTLOGOUT_TIME, dateFormat.format(cal.getTime()));
+
+            }
             visitorsID.add(db.insert(VisitorEntry.TABLE_NAME, null, values));
             values.clear();
         }

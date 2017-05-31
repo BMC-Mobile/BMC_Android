@@ -57,6 +57,7 @@ public final class BMCContract {
         public static final String COLUMN_MOBILE = "mobile";
         public static final String COLUMN_CREATION_TIME = "creation_time";
         public static final String COLUMN_LASTLOGIN_TIME = "last_login_time";
+        public static final String COLUMN_LASTLOGOUT_TIME = "last_logout_time";
         public static final String COLUMN_CHECK_STATUS = "status";
     }
 }
