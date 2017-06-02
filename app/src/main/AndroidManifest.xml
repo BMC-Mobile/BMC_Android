@@ -27,15 +27,21 @@
         <activity
             android:name=".admin.AdminActivity"
             android:label="@string/title_activity_admin"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".admin.EditStaffActivity" />
+        <activity android:name=".admin.EditStaffActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
 
         <provider
             android:name=".data.BMCProvider"
             android:authorities="com.bmc.dataprovider"
             android:exported="false" />
 
-        <activity android:name=".admin.AppointmentMgnActivity"></activity>
+        <activity android:name=".admin.AppointmentMgnActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
