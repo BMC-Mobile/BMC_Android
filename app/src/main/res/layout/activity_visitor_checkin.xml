@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_visitor_checkin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.liuyufei.bmc_android.VisitorCheckin">
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Company Name"
+        android:ems="10"
+        android:id="@+id/company_txt"
+        android:layout_alignBaseline="@+id/company_lbl"
+        android:layout_alignBottom="@+id/company_lbl"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Contact Phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/company_lbl"
+        android:layout_alignEnd="@+id/company_lbl"
+        android:layout_marginTop="23dp"
+        android:id="@+id/contact_lbl" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Contact Phone"
+        android:ems="10"
+        android:layout_alignTop="@+id/contact_lbl"
+        android:layout_alignStart="@+id/company_txt"
+        android:id="@+id/contact_txt" />
+
+    <TextView
+        android:text="Company Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:id="@+id/company_lbl"
+        android:layout_below="@+id/name_lbl"
+        android:layout_alignEnd="@+id/name_lbl" />
+
+    <TextView
+        android:text="Select a Staff"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/contact_lbl"
+        android:layout_alignEnd="@+id/contact_lbl"
+        android:layout_marginTop="19dp"
+        android:id="@+id/staff_lbl" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/staff_lbl"
+        android:layout_alignStart="@+id/contact_txt"
+        android:id="@+id/staff_spi"
+        android:spinnerMode="dropdown" />
+
+    <TextView
+        android:text="Purpose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/staff_lbl"
+        android:layout_alignEnd="@+id/staff_lbl"
+        android:layout_marginTop="24dp"
+        android:id="@+id/purpose_lbl" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text="Name"
+        android:ems="10"
+        android:layout_marginTop="115dp"
+        android:id="@+id/name_txt"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/company_txt" />
+
+    <TextView
+        android:text="Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name_lbl"
+        android:layout_marginEnd="41dp"
+        android:layout_alignBaseline="@+id/name_txt"
+        android:layout_alignBottom="@+id/name_txt"
+        android:layout_toStartOf="@+id/name_txt" />
+
+    <Button
+        android:text="Check In"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="76dp"
+        android:id="@+id/checkin_btn"
+        android:onClick="checkIn"
+        android:layout_below="@+id/purpose_lbl"
+        android:layout_centerHorizontal="true" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/purpose_lbl"
+        android:layout_alignStart="@+id/staff_spi"
+        android:id="@+id/purpose_spi"
+        android:spinnerMode="dropdown"
+        android:entries="@array/purpose"/>
+
+</RelativeLayout>
