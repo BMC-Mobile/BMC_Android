@@ -1,18 +1,17 @@
 package com.liuyufei.bmc_android.admin;
 
-import android.app.Fragment;
-import android.app.LoaderManager;
 import android.content.ContentResolver;
-import android.content.Context;
-import android.content.CursorLoader;
 import android.content.Intent;
-import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -99,7 +98,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
 
 
     @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //change selection
         Log.i("onCreateLoader", "onCreateLoader selection changed");
         Uri resourceUri = BMCContract.StaffEntry.CONTENT_URI;
@@ -130,6 +129,17 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         return lc;
     }
 
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+    }
+
+/*
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -140,6 +150,7 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
+*/
 
     Handler handler = new Handler();
     boolean canRun = true;
