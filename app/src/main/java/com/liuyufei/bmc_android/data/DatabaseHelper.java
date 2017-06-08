@@ -24,6 +24,7 @@ import static com.liuyufei.bmc_android.data.BMCContract.VisitorEntry;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+
     private static final String DATABASE_NAME = "BMC.db";
     private static final int DATABASE_VERSION = 1;
 
