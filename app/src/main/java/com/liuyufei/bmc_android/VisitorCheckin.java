@@ -31,15 +31,15 @@ public class VisitorCheckin extends AppCompatActivity {
         contact_txt = (EditText) findViewById(R.id.contact_txt);
         purpose_spi = (Spinner) findViewById(R.id.purpose_spi);
         staff_spi = (Spinner) findViewById(R.id.staff_spi);
-        dbHelper = new DatabaseHelper(this, null, getContext(), 1);
+//        dbHelper = new DatabaseHelper(this, null, getContext(), 1);
     }
 
     public void checkIn(){
-        Visitor visitor = new Visitor(name_txt.getText().toString());
-        Visitor visitor2 = new Visitor(company_txt.getText().toString());
-        Visitor visitor3 = new Visitor(contact_txt.getText().toString());
-        Appointment appointment = new Appointment(purpose_txt.getText().toString());
-        dbHelper.onCreate();
+//        Visitor visitor = new Visitor(name_txt.getText().toString());
+//        Visitor visitor2 = new Visitor(company_txt.getText().toString());
+//        Visitor visitor3 = new Visitor(contact_txt.getText().toString());
+//        Appointment appointment = new Appointment(purpose_txt.getText().toString());
+//        dbHelper.onCreate();
         
     }
 }
