@@ -1,9 +1,17 @@
 package com.liuyufei.bmc_android;
 
+import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.databinding.DataBindingUtil;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -11,8 +19,14 @@ import android.widget.Spinner;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.data.BMCQueryHandler;
 import com.liuyufei.bmc_android.data.DatabaseHelper;
+import com.liuyufei.bmc_android.databinding.ActivityEditStaffBinding;
 import com.liuyufei.bmc_android.model.Appointment;
+import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.model.Visitor;
+import com.liuyufei.bmc_android.utility.Constants;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
 
@@ -24,42 +38,86 @@ public class VisitorCheckin extends AppCompatActivity {
     EditText contact_txt;
     Spinner purpose_spi;
     Spinner staff_spi;
-    DatabaseHelper dbHelper;
+    Button checkBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visitor_checkin);
+        String mobile = getIntent().getExtras().getString("mobile");
 
         name_txt = (EditText) findViewById(R.id.name_txt);
         company_txt = (EditText) findViewById(R.id.company_txt);
         contact_txt = (EditText) findViewById(R.id.contact_txt);
+        contact_txt.setText(mobile);
+        //hard code purpose
         purpose_spi = (Spinner) findViewById(R.id.purpose_spi);
         staff_spi = (Spinner) findViewById(R.id.staff_spi);
+        //query db for staffs
+        queryStaff();
 
-//        dbHelper = new DatabaseHelper(this, null, getgetContext(), 1);
+        checkBTN = (Button) findViewById(R.id.checkin_btn);
+        checkBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkIn();
+            }
+        });
     }
 
+
+    private void queryStaff(){
+        AsyncQueryHandler queryHandler =
+                new AsyncQueryHandler(getContentResolver()) {
+                    @Override
+                    protected void onQueryComplete(int token, Object cookie,
+                                                   Cursor cursor) {
+                        try {
+                            List<Staff> list = new ArrayList<>();
+                            while(cursor.moveToNext()){
+                                Staff staff = new Staff(cursor.getInt(0),cursor.getString(1),null,null,null,null);
+                                list.add(staff);
+                            }
+
+                            ArrayAdapter<Staff> dataAdapter = new ArrayAdapter<>(VisitorCheckin.this,
+                                    android.R.layout.simple_spinner_item, list);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            staff_spi.setAdapter(dataAdapter);
+
+                        } finally {
+                            cursor.close();
+                        }
+                    }
+                };
+
+        queryHandler.startQuery(0, null, BMCContract.StaffEntry.CONTENT_URI,
+                new String[] {BMCContract.StaffEntry._ID,BMCContract.StaffEntry.COLUMN_NAME}, null, null, null);
+    }
+
+
     public void checkIn(){
-        BMCQueryHandler handler = new BMCQueryHandler(getContentResolver());
+        AsyncQueryHandler insertHandler = new AsyncQueryHandler(getContentResolver()) {
+            @Override
+            protected void onInsertComplete(int token, Object cookie, Uri uri) {
+                BMCQueryHandler handler = new BMCQueryHandler(getContentResolver());
+                ContentValues appointmentValues = new ContentValues();
+                //get select staff id
+                String visitor_id = uri.getLastPathSegment();
+                appointmentValues.put(BMCContract.AppointmentEntry.COLUMN_STAFF,((Staff)staff_spi.getSelectedItem()).Id.get());
+                appointmentValues.put(BMCContract.AppointmentEntry.COLUMN_DESCRIPTION,purpose_spi.getSelectedItem().toString());
+                appointmentValues.put(BMCContract.AppointmentEntry.COLUMN_VISITOR,visitor_id);
+                handler.startInsert(1, null, BMCContract.AppointmentEntry.CONTENT_URI,appointmentValues);
 
+            }
+        };
 
-        ContentValues staffValues = new ContentValues();
-        staffValues.put(BMCContract.VisitorEntry.COLUMN_NAME,name_txt.getText().toString());
+//      extract visitor to save
+        ContentValues visitorValues = new ContentValues();
+        visitorValues.put(BMCContract.VisitorEntry.COLUMN_NAME,name_txt.getText().toString());
+        visitorValues.put(BMCContract.VisitorEntry.COLUMN_BUSINESS_NAME,company_txt.getText().toString());
+        visitorValues.put(BMCContract.VisitorEntry.COLUMN_MOBILE,contact_txt.getText().toString());
+        insertHandler.startInsert(1, null, BMCContract.VisitorEntry.CONTENT_URI,visitorValues);
 
-        handler.startInsert(1, null, BMCContract.VisitorEntry.CONTENT_URI,staffValues);
-
-        ContentValues appointmentValues = new ContentValues();
-
-
-        handler.startInsert(1, null, BMCContract.AppointmentEntry.CONTENT_URI,appointmentValues);
-
-
-//        Visitor visitor = new Visitor(name_txt.getText().toString());
-//        Visitor visitor2 = new Visitor(company_txt.getText().toString());
-//        Visitor visitor3 = new Visitor(contact_txt.getText().toString());
-//        Appointment appointment = new Appointment(purpose_txt.getText().toString());
-//        dbHelper.onCreate();
         
     }
 }

@@ -30,14 +30,13 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visitor_welcome);
 
 
-
         findViewById(checkbtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
 
 
                 TextView mobileTV = (TextView) findViewById(R.id.inputMobile);
-                String inputMobile = mobileTV.getText().toString();
+                final String inputMobile = mobileTV.getText().toString();
 
                 if(inputMobile==null||inputMobile.length()==0){
                     //alert input mobile is null
@@ -55,9 +54,6 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                             @Override
                             protected void onQueryComplete(int token, Object cookie,
                                                            Cursor cursor) {
-
-                                Toast.makeText(v.getContext(),"query result from ...",Toast.LENGTH_LONG).show();
-
                                 try {
                                     if ((cursor != null) && cursor.moveToFirst()) {
                                         Log.i("aaa","Exsiting Visitor");
@@ -72,6 +68,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                         //if new go to the appointment creation page
                                         Log.i("aaa","New Visitor");
                                         Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckin.class);
+                                        intentToAppointmentForm.putExtra("mobile",inputMobile);
                                         startActivity(intentToAppointmentForm);
                                     }
                                 } finally {
@@ -79,7 +76,6 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                 }
                             }
                         };
-
 
                 String selection = BMCContract.VisitorEntry.COLUMN_MOBILE+"=?";
                 String[] selectionArgs = {inputMobile};
