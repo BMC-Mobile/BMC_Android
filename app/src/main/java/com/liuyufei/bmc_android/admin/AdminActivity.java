@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.VisitorWelcomeActivity;
+import com.liuyufei.bmc_android.utility.Constants;
 
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -171,5 +172,16 @@ public class AdminActivity extends AppCompatActivity
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Constants.STR_ACIVITY_NAME.equals("VisitorWelcomeActivity")){
+            goManagementFragment(APPOINTMENT);
+
+        }
+        //may be more fragment navigation...
+        Toast.makeText(this,"came from visitor page",Toast.LENGTH_SHORT).show();
     }
 }

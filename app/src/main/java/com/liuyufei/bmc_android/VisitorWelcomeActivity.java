@@ -1,6 +1,7 @@
 package com.liuyufei.bmc_android;
 
 import android.content.AsyncQueryHandler;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +13,10 @@ import android.widget.Toast;
 
 import com.github.mikephil.charting.utils.Utils;
 import com.liuyufei.bmc_android.R;
+import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.data.BMCQueryHandler;
+import com.liuyufei.bmc_android.utility.Constants;
 
 import static com.liuyufei.bmc_android.R.id.checkbtn;
 
@@ -47,15 +50,20 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                 try {
                                     if ((cursor != null) && cursor.moveToFirst()) {
                                         String displayName = cursor.getString(0);
-
                                         // go to appointment list page\
-                                        //find all appointments releavent to the visitor.
+                                        //find all appointments relevant to the visitor.
+                                        //Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,AdminActivity.class);
+                                        Constants.STR_ACIVITY_NAME = "VisitorWelcomeActivity";
+
                                     }else{
                                         //check if the visitor is new
                                         //if new go to the appointment creation page
+
+                                        Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckin.class);
+                                        startActivity(intentToAppointmentForm);
                                     }
                                 } finally {
-//                                    Utils.closeSilently(cursor);
+                                    cursor.close();
                                 }
                             }
                         };
