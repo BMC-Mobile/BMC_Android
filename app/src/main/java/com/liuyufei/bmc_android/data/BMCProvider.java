@@ -20,6 +20,7 @@ import static com.liuyufei.bmc_android.data.BMCContract.*;
 
 public class BMCProvider extends ContentProvider {
 
+
     //constants for the operation
     private static final int STAFF = 1;
     private static final int STAFF_ID = 2;
