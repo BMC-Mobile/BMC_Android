@@ -74,7 +74,7 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
                 String visitorName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME));
 
 
-                //confirm?
+                //confirm checkout a visitor by admin?
                 new AlertDialog.Builder(VisitorFragment.this.getActivity())
                         .setTitle("Confirm Checkout?")
                         .setMessage("Confirm help "+visitorName+" checkout?")
