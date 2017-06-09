@@ -22,9 +22,5 @@ public class Staff implements Serializable {
         this.mobile.set(mobile);
     }
 
-    @Override
-    public String toString() {
-        return name.get();
-    }
 }
 

@@ -1,17 +1,18 @@
 package com.liuyufei.bmc_android.admin;
 
+import android.app.Fragment;
+import android.app.LoaderManager;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,8 +29,15 @@ import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Staff;
 
 
+/**
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * interface.
+ */
 public class StaffFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private OnListFragmentInteractionListener mListener;
 
     ContentResolver contentResolver;
     private static final int URL_LOADER = 0;
@@ -98,7 +106,24 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
 
 
     @Override
-    public android.support.v4.content.Loader<Cursor> onCreateLoader(int id, Bundle args) {
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //change selection
         Log.i("onCreateLoader", "onCreateLoader selection changed");
         Uri resourceUri = BMCContract.StaffEntry.CONTENT_URI;
@@ -129,17 +154,6 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         return lc;
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        adapter.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
-/*
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
@@ -150,7 +164,6 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
-*/
 
     Handler handler = new Handler();
     boolean canRun = true;
@@ -199,4 +212,17 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+    }
 }
