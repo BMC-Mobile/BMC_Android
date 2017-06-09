@@ -3,21 +3,14 @@ package com.liuyufei.bmc_android;
 import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.github.mikephil.charting.utils.Utils;
-import com.liuyufei.bmc_android.R;
-import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
-import com.liuyufei.bmc_android.data.BMCQueryHandler;
 import com.liuyufei.bmc_android.utility.Constants;
 
 import static com.liuyufei.bmc_android.R.id.checkbtn;
@@ -67,7 +60,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                         //check if the visitor is new
                                         //if new go to the appointment creation page
                                         Log.i("aaa","New Visitor");
-                                        Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckin.class);
+                                        Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckIn.class);
                                         intentToAppointmentForm.putExtra("mobile",inputMobile);
                                         startActivity(intentToAppointmentForm);
                                     }

@@ -2,36 +2,27 @@ package com.liuyufei.bmc_android;
 
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
-import android.content.Intent;
 import android.database.Cursor;
-import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.data.BMCQueryHandler;
-import com.liuyufei.bmc_android.data.DatabaseHelper;
-import com.liuyufei.bmc_android.databinding.ActivityEditStaffBinding;
-import com.liuyufei.bmc_android.model.Appointment;
 import com.liuyufei.bmc_android.model.Staff;
-import com.liuyufei.bmc_android.model.Visitor;
-import com.liuyufei.bmc_android.utility.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
+import static com.liuyufei.bmc_android.utility.Constants.getCurrentTimeAsString;
 
 
-public class VisitorCheckin extends AppCompatActivity {
+public class VisitorCheckIn extends AppCompatActivity {
 
     EditText name_txt;
     EditText company_txt;
@@ -79,7 +70,7 @@ public class VisitorCheckin extends AppCompatActivity {
                                 list.add(staff);
                             }
 
-                            ArrayAdapter<Staff> dataAdapter = new ArrayAdapter<>(VisitorCheckin.this,
+                            ArrayAdapter<Staff> dataAdapter = new ArrayAdapter<>(VisitorCheckIn.this,
                                     android.R.layout.simple_spinner_item, list);
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             staff_spi.setAdapter(dataAdapter);
@@ -116,6 +107,9 @@ public class VisitorCheckin extends AppCompatActivity {
         visitorValues.put(BMCContract.VisitorEntry.COLUMN_NAME,name_txt.getText().toString());
         visitorValues.put(BMCContract.VisitorEntry.COLUMN_BUSINESS_NAME,company_txt.getText().toString());
         visitorValues.put(BMCContract.VisitorEntry.COLUMN_MOBILE,contact_txt.getText().toString());
+        visitorValues.put(BMCContract.VisitorEntry.COLUMN_CREATION_TIME, getCurrentTimeAsString());
+        visitorValues.put(BMCContract.VisitorEntry.COLUMN_LASTLOGIN_TIME, getCurrentTimeAsString());
+
         insertHandler.startInsert(1, null, BMCContract.VisitorEntry.CONTENT_URI,visitorValues);
 
         
