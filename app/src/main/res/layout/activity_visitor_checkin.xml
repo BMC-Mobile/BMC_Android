@@ -111,7 +111,6 @@
         android:layout_alignTop="@+id/purpose_lbl"
         android:layout_alignStart="@+id/staff_spi"
         android:id="@+id/purpose_spi"
-        android:spinnerMode="dropdown"
-        android:entries="@array/purpose"/>
+        android:spinnerMode="dropdown" />
 
 </RelativeLayout>

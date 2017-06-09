@@ -14,6 +14,7 @@ import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.utility.Constants;
 
 import static com.liuyufei.bmc_android.R.id.checkbtn;
+import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
 
 public class VisitorWelcomeActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                 try {
                                     if ((cursor != null) && cursor.moveToFirst()) {
 //                                        String displayName = cursor.getString(0);
-                                        // go to appointment list page\
+                                        // go to appointment staffList page\
                                         //find all appointments relevant to the visitor.
                                         //Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,AdminActivity.class);
                                         Constants.STR_ACIVITY_NAME = "VisitorWelcomeActivity";
@@ -60,6 +61,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                         //if new go to the appointment creation page
                                         Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckIn.class);
                                         intentToAppointmentForm.putExtra("mobile",inputMobile);
+                                        intentToAppointmentForm.putExtra("check_status",CHECKIN);
                                         startActivity(intentToAppointmentForm);
                                     }
                                 } finally {

@@ -22,6 +22,7 @@ import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.utility.Constants;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
@@ -37,6 +38,9 @@ public class VisitorCheckIn extends AppCompatActivity {
     Spinner purpose_spi;
     Spinner staff_spi;
     Button checkBTN;
+    List<Staff> staffList = new ArrayList<>();
+    List<String> purposeList = Arrays.asList("General Business","Drop In","Scheduled Appointment","Other");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +51,23 @@ public class VisitorCheckIn extends AppCompatActivity {
         contact_txt = (EditText) findViewById(R.id.contact_txt);
         //hard code purpose
         purpose_spi = (Spinner) findViewById(R.id.purpose_spi);
+
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(VisitorCheckIn.this,
+                android.R.layout.simple_spinner_item, purposeList);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        purpose_spi.setAdapter(dataAdapter);
+
+
+
         staff_spi = (Spinner) findViewById(R.id.staff_spi);
         checkBTN = (Button) findViewById(R.id.checkin_btn);
 
-        String check_status = getIntent().getExtras().getString("check_status");
-        if ("checkout".equals(check_status)) {
+        Integer check_status = getIntent().getExtras().getInt("check_status");
+        queryStaff();
+        if (CHECKOUT.equals(check_status)) {
             final Integer visitorID = getIntent().getExtras().getInt("visitorID");
             final String visitorName = getIntent().getExtras().getString("visitorName");
-            //disable all editText
+            queryAppointmentByVisitorID(visitorID);
             checkBTN.setText("Check Out");
             checkBTN.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +79,6 @@ public class VisitorCheckIn extends AppCompatActivity {
             String mobile = getIntent().getExtras().getString("mobile");
             contact_txt.setText(mobile);
             //query db for staffs
-            queryStaff();
             checkBTN.setText("Check In");
             checkBTN.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,25 +88,26 @@ public class VisitorCheckIn extends AppCompatActivity {
             });
         }
 
-
     }
 
 
     private void queryStaff() {
+
+        if(staffList.size()!=0) return;
+
         AsyncQueryHandler queryHandler =
                 new AsyncQueryHandler(getContentResolver()) {
                     @Override
                     protected void onQueryComplete(int token, Object cookie,
                                                    Cursor cursor) {
                         try {
-                            List<Staff> list = new ArrayList<>();
                             while (cursor.moveToNext()) {
                                 Staff staff = new Staff(cursor.getInt(0), cursor.getString(1), null, null, null, null);
-                                list.add(staff);
+                                staffList.add(staff);
                             }
 
                             ArrayAdapter<Staff> dataAdapter = new ArrayAdapter<>(VisitorCheckIn.this,
-                                    android.R.layout.simple_spinner_item, list);
+                                    android.R.layout.simple_spinner_item, staffList);
                             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             staff_spi.setAdapter(dataAdapter);
 
@@ -106,6 +119,64 @@ public class VisitorCheckIn extends AppCompatActivity {
 
         queryHandler.startQuery(0, null, BMCContract.StaffEntry.CONTENT_URI,
                 new String[]{BMCContract.StaffEntry._ID, BMCContract.StaffEntry.COLUMN_NAME}, null, null, null);
+    }
+
+
+    private void queryAppointmentByVisitorID(Integer visitorID) {
+        //query from appointment by visitorID
+        AsyncQueryHandler queryHandler =
+                new AsyncQueryHandler(getContentResolver()) {
+                    @Override
+                    protected void onQueryComplete(int token, Object cookie,
+                                                   Cursor cursor) {
+                        try {
+                            //only selection the first one
+                            if (cursor.moveToNext()) {
+
+                                String purpose = cursor.getString(cursor.getColumnIndex(BMCContract.AppointmentEntry.COLUMN_DESCRIPTION));
+                                String staffName = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
+                                String visitorName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME));
+                                String visitorCompanyName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_BUSINESS_NAME));
+                                String visitorMobile = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_MOBILE));
+                                name_txt.setText(visitorName);
+                                name_txt.setEnabled(false);
+                                company_txt.setText(visitorCompanyName);
+                                company_txt.setEnabled(false);
+                                contact_txt.setText(visitorMobile);
+                                contact_txt.setEnabled(false);
+                                // set Staff spinner position
+                                int indexOfStaff = 0;
+                                for(Staff staff:staffList){
+                                    if(staff.name.get().equals(staffName)){
+                                        break;
+                                    }else{
+                                        indexOfStaff++;
+                                    }
+                                }
+                                staff_spi.setSelection(indexOfStaff);
+
+                                // set purpose spinner position
+                                int indexOfPurpose = 0;
+                                for(String purp:purposeList){
+                                    if(purp.equals(purpose)){
+                                        break;
+                                    }else{
+                                        indexOfPurpose++;
+                                    }
+                                }
+                                purpose_spi.setSelection(indexOfPurpose);
+
+                            }
+                        } finally {
+                            cursor.close();
+                        }
+                    }
+                };
+
+        String selection = BMCContract.AppointmentEntry.COLUMN_VISITOR + "=?";
+        String[] args = {visitorID.toString()};
+        String orderBy = BMCContract.AppointmentEntry.COLUMN_CREATED_WHEN+" DESC";
+        queryHandler.startQuery(0, null, BMCContract.AppointmentEntry.CONTENT_URI, null, selection, args, orderBy);
     }
 
 
@@ -121,7 +192,7 @@ public class VisitorCheckIn extends AppCompatActivity {
                 appointmentValues.put(BMCContract.AppointmentEntry.COLUMN_DESCRIPTION, purpose_spi.getSelectedItem().toString());
                 appointmentValues.put(BMCContract.AppointmentEntry.COLUMN_VISITOR, visitor_id);
                 handler.startInsert(1, null, BMCContract.AppointmentEntry.CONTENT_URI, appointmentValues);
-                //TODO go to the appointment list
+                //TODO go to the appointment staffList
             }
         };
 

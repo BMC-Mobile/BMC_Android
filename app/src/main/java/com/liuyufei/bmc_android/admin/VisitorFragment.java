@@ -78,7 +78,7 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
 
 
                 Intent intentToAppointmentForm = new Intent(getActivity(),VisitorCheckIn.class);
-                intentToAppointmentForm.putExtra("check_status","checkout");
+                intentToAppointmentForm.putExtra("check_status",CHECKOUT);
                 intentToAppointmentForm.putExtra("visitorID",visitorID);
                 intentToAppointmentForm.putExtra("visitorName",visitorName);
 
