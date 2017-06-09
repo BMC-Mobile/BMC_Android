@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
@@ -153,7 +152,6 @@ public class AdminActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Check  In page called", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AdminActivity.this,VisitorWelcomeActivity.class);
                     startActivity(intent);
                 }
