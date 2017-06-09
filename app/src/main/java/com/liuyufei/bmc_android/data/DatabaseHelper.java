@@ -35,6 +35,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     StaffEntry.COLUMN_TITLE + " TEXT, " +
                     StaffEntry.COLUMN_DEPARTMENT + " TEXT, " +
                     StaffEntry.COLUMN_PHOTO + " TEXT, " +
+                    StaffEntry.COLUMN_CREATED_BY + " TEXT default BMC_ADMIN, " +
+                    StaffEntry.COLUMN_CREATED_WHEN + " datetime default CURRENT_TIMESTAMP, " +
+                    StaffEntry.COLUMN_UPDATED_BY + " TEXT, " +
+                    StaffEntry.COLUMN_UPDATED_WHEN + " datetime, " +
                     StaffEntry.COLUMN_MOBILE + " TEXT" +
                     ")";
 
@@ -47,6 +51,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     VisitorEntry.COLUMN_LASTLOGOUT_TIME + " datetime, " +
                     VisitorEntry.COLUMN_BUSINESS_NAME + " TEXT, " +
                     VisitorEntry.COLUMN_MOBILE + " TEXT, " +
+                    VisitorEntry.COLUMN_CREATED_BY + " TEXT default BMC_ADMIN, " +
+                    VisitorEntry.COLUMN_CREATED_WHEN + " datetime default CURRENT_TIMESTAMP, " +
+                    VisitorEntry.COLUMN_UPDATED_BY + " TEXT, " +
+                    VisitorEntry.COLUMN_UPDATED_WHEN + " datetime, " +
                     VisitorEntry.COLUMN_CHECK_STATUS + " INTEGER default " +CHECKOUT+
                     " )";
 
@@ -55,6 +63,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     AppointmentEntry._ID + " INTEGER PRIMARY KEY, " +
                     AppointmentEntry.COLUMN_DESCRIPTION + " TEXT, " +
                     AppointmentEntry.COLUMN_DATETIME + " datetime default CURRENT_TIMESTAMP, " +
+                    AppointmentEntry.COLUMN_CREATED_BY + " TEXT default BMC_ADMIN, " +
+                    AppointmentEntry.COLUMN_CREATED_WHEN + " datetime default CURRENT_TIMESTAMP, " +
+                    AppointmentEntry.COLUMN_UPDATED_BY + " TEXT, " +
+                    AppointmentEntry.COLUMN_UPDATED_WHEN + " datetime, " +
                     AppointmentEntry.COLUMN_STAFF + " INTEGER NOT NULL, " +
                     AppointmentEntry.COLUMN_VISITOR + " INTEGER NOT NULL, " +
                     " FOREIGN KEY(" + AppointmentEntry.COLUMN_VISITOR + ") REFERENCES " + VisitorEntry.TABLE_NAME + "(" + VisitorEntry._ID + "), " +

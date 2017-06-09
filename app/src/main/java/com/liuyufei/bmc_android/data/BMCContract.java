@@ -31,6 +31,10 @@ public final class BMCContract {
         public static final String COLUMN_MOBILE = "mobile";
         public static final String COLUMN_DEPARTMENT = "department";
         public static final String COLUMN_PHOTO = "photo";
+        public static final String COLUMN_CREATED_BY = "staff_created_by";
+        public static final String COLUMN_CREATED_WHEN = "staff_created_when";
+        public static final String COLUMN_UPDATED_BY = "staff_updated_by";
+        public static final String COLUMN_UPDATED_WHEN = "staff_updated_when";
     }
 
     public static final class AppointmentEntry implements BaseColumns {
@@ -44,6 +48,10 @@ public final class BMCContract {
         public static final String COLUMN_STAFF = "staff";
         public static final String COLUMN_VISITOR = "visitor";
         public static final String COLUMN_DATETIME = "app_datetime";
+        public static final String COLUMN_CREATED_BY = "app_created_by";
+        public static final String COLUMN_CREATED_WHEN = "app_created_when";
+        public static final String COLUMN_UPDATED_BY = "app_updated_by";
+        public static final String COLUMN_UPDATED_WHEN = "app_updated_when";
     }
 
     public static final class VisitorEntry implements BaseColumns {
@@ -59,5 +67,9 @@ public final class BMCContract {
         public static final String COLUMN_LASTLOGIN_TIME = "last_login_time";
         public static final String COLUMN_LASTLOGOUT_TIME = "last_logout_time";
         public static final String COLUMN_CHECK_STATUS = "status";
+        public static final String COLUMN_CREATED_BY = "v_created_by";
+        public static final String COLUMN_CREATED_WHEN = "v_created_when";
+        public static final String COLUMN_UPDATED_BY = "v_updated_by";
+        public static final String COLUMN_UPDATED_WHEN = "v_updated_when";
     }
 }
