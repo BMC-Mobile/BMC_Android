@@ -8,13 +8,4 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_test">test</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string-array name="purpose">
-        <item>General Business</item>
-        <item>Drop In</item>
-        <item>Scheduied Appointment</item>
-        <item>Other</item>
-    </string-array>
 </resources>
