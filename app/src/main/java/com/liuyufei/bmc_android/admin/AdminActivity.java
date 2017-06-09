@@ -15,9 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
+import com.liuyufei.bmc_android.VisitorWelcomeActivity;
 
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -148,6 +150,15 @@ public class AdminActivity extends AppCompatActivity
             fragment = new AppointmentFragment();
         }else if(VISITOR.equals(mangType)){
             fragment = new VisitorFragment();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Check  In page called", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(AdminActivity.this,VisitorWelcomeActivity.class);
+                    startActivity(intent);
+                }
+            });
+            fab.show();
         }
 
         Bundle args = new Bundle();

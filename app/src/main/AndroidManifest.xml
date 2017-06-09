@@ -44,7 +44,7 @@
             android:name=".admin.AppointmentMgnActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
-        <activity android:name=".VisitorWelcomeActivity"></activity>
+        <activity android:name=".VisitorWelcomeActivity" android:parentActivityName=".admin.AdminActivity"></activity>
     </application>
 
 </manifest>
