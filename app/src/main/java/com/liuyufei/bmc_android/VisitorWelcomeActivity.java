@@ -49,7 +49,6 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                                            Cursor cursor) {
                                 try {
                                     if ((cursor != null) && cursor.moveToFirst()) {
-                                        Log.i("aaa","Exsiting Visitor");
 //                                        String displayName = cursor.getString(0);
                                         // go to appointment list page\
                                         //find all appointments relevant to the visitor.
@@ -59,7 +58,6 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                     }else{
                                         //check if the visitor is new
                                         //if new go to the appointment creation page
-                                        Log.i("aaa","New Visitor");
                                         Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckIn.class);
                                         intentToAppointmentForm.putExtra("mobile",inputMobile);
                                         startActivity(intentToAppointmentForm);
