@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.utils.Utils;
 import com.liuyufei.bmc_android.R;
@@ -33,14 +34,16 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
 
         findViewById(checkbtn).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-
+            public void onClick(final View v) {
 
                 AsyncQueryHandler queryHandler =
                         new AsyncQueryHandler(getContentResolver()) {
                             @Override
                             protected void onQueryComplete(int token, Object cookie,
                                                            Cursor cursor) {
+
+                                Toast.makeText(v.getContext(),"query result from ...",Toast.LENGTH_LONG).show();
+
                                 try {
                                     if ((cursor != null) && cursor.moveToFirst()) {
                                         String displayName = cursor.getString(0);
