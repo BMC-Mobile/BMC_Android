@@ -1,46 +1,40 @@
 package com.liuyufei.bmc_android;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.EditText;
 
 import com.liuyufei.bmc_android.admin.AdminActivity;
-import com.yingchen.bmc.login.LoginActivity;
-import com.yingchen.bmc.session.SessionManager;
 
 public class MainActivity extends AppCompatActivity {
-    static String TAG="MainActivity";
-
-    // Declare SessionManager
-    private SessionManager session ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_main);
+        findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-        // Initial Session
-        session = new SessionManager(getApplicationContext());
-        Log.i(TAG, String.valueOf(session.isLoggedIn()));
-
-        // Check User Login
-        if(!session.isLoggedIn()){
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }else{
-            Intent intent = new Intent(this,AdminActivity.class);
-            startActivity(intent);
-        }
-
+                EditText editText = (EditText) findViewById(R.id.pwd_value);
+                String inputPwd = editText.getText().toString();
+                if("admin".equals(inputPwd)){
+                    Intent intent = new Intent(MainActivity.this,AdminActivity.class);
+                    startActivity(intent);
+                }else{
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("ERROR")
+                            .setMessage("Incorrect password, input again")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, null)
+                            .show();
+                }
+            }
+        });
     }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // When stop clear session
-        session.logoutUser();
-    }
-
 }

@@ -199,6 +199,7 @@ public class BMCProvider extends ContentProvider {
             Log.e("Error", "update error for URI " + uri);
             return -1;
         }
+        getContext().getContentResolver().notifyChange(uri, null);
         return id;
     }
 }

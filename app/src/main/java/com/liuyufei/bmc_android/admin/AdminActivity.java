@@ -1,12 +1,12 @@
 package com.liuyufei.bmc_android.admin;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,18 +16,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
-import com.yingchen.bmc.session.SessionManager;
+import com.liuyufei.bmc_android.VisitorWelcomeActivity;
 
 public class AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, StaffFragment.OnListFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
 
+    public static final String STAFF = "Staff";
+    public static final String APPOINTMENT = "Appointment";
+    public static final String PIE = "Pie";
+    public static final String BAR = "Bar";
+    public static final String VISITOR = "Visitor";
     FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_admin);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,11 +53,6 @@ public class AdminActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-
-//        fab.hide();
-
-        //default go to staff fragment
-//        goStaffFragment();
     }
 
     @Override
@@ -86,24 +88,26 @@ public class AdminActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.staffMag) {
-            goStaffFragment();
-        } else if (id == R.id.nav_gallery) {
+            goManagementFragment(STAFF);
+//        } else if (id == R.id.tools) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-            userSignOut();
+        } else if (id == R.id.visitorMag) {
+            goManagementFragment(VISITOR);
+        } else if (id == R.id.appointmentMag) {
+            goManagementFragment(APPOINTMENT);
+        } else if (id == R.id.logout) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.statistic_appointment) {
+            goCharFragment(PIE);
+        }else if (id == R.id.statistic_visitor) {
+            goCharFragment(BAR);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -111,39 +115,59 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
+    private void goCharFragment(String chartType) {
+        fab.hide();
+        Fragment fragment;
+        if(BAR.equals(chartType)){
+            fragment = new BarChartFragment();
+        }else{
+            fragment = new PieChartFragment();
+        }
+
+        setTitle(chartType);
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, fragment)
+                .commit();
+    }
 
 
+    private void goManagementFragment(String mangType) {
+        Fragment fragment = null;
+        if(STAFF.equals(mangType)){
+            fragment = new StaffFragment();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AdminActivity.this,EditStaffActivity.class);
+                    startActivity(intent);
+                }
+            });
+            fab.show();
+        }else if(APPOINTMENT.equals(mangType)){
+            fragment = new AppointmentFragment();
+        }else if(VISITOR.equals(mangType)){
+            fragment = new VisitorFragment();
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(AdminActivity.this,VisitorWelcomeActivity.class);
+                    startActivity(intent);
+                }
+            });
+            fab.show();
+        }
 
-    private void goStaffFragment() {
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Add Staff", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-
-                Intent intent = new Intent(AdminActivity.this,EditStaffActivity.class);
-                startActivity(intent);
-
-            }
-        });
-        fab.show();
-
-        Fragment fragment = new StaffFragment();
         Bundle args = new Bundle();
-//            args.putInt(StaffFragment.ARG_PLANET_NUMBER, position);
         args.putInt("position", 1);
         fragment.setArguments(args);
-
+        setTitle(mangType);
         // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
-    }
-
-    private void userSignOut(){
-        SessionManager session = new SessionManager(getApplicationContext());
-        session.logoutUser();
     }
 }
