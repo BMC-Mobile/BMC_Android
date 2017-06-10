@@ -154,23 +154,20 @@ public class VisitorCheckIn extends AppCompatActivity {
                                 contact_txt.setText(visitorMobile);
                                 contact_txt.setEnabled(false);
                                 // set Staff spinner position
-                                int indexOfStaff = 0;
-                                for(;indexOfStaff<staffList.size();indexOfStaff++){
-                                    if(staffList.get(indexOfStaff).name.get().equals(staffName)) break;
+                                for(int indexOfStaff = 0;indexOfStaff<staffList.size();indexOfStaff++){
+                                    if(staffList.get(indexOfStaff).name.get().equals(staffName)){
+                                        staff_spi.setSelection(indexOfStaff);
+                                        break;
+                                    }
                                 }
-                                //set default
-                                if(indexOfStaff==staffList.size()) indexOfStaff=0;
-                                staff_spi.setSelection(indexOfStaff);
 
                                 // set purpose spinner position
-                                int indexOfPurpose = 0;
-                                for(;indexOfPurpose<purposeList.size();indexOfPurpose++){
-                                    if(purposeList.get(indexOfPurpose).equals(purpose)) break;
+                                for(int indexOfPurpose = 0;indexOfPurpose<purposeList.size();indexOfPurpose++){
+                                    if(purposeList.get(indexOfPurpose).equals(purpose)){
+                                        purpose_spi.setSelection(indexOfPurpose);
+                                        break;
+                                    }
                                 }
-                                //set default
-                                if(indexOfPurpose==purposeList.size())indexOfPurpose = 0;
-                                purpose_spi.setSelection(indexOfPurpose);
-
                             }
                         } finally {
                             cursor.close();
