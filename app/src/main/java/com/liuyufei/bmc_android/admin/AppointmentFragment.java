@@ -24,6 +24,7 @@ import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Appointment;
 import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.model.Visitor;
+import com.liuyufei.bmc_android.utility.Constants;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,6 +102,13 @@ public class AppointmentFragment extends Fragment implements LoaderManager.Loade
         //change selection
         Log.i("onCreateLoader", "onCreateLoader selection changed");
         Uri resourceUri = BMCContract.AppointmentEntry.CONTENT_URI;
+
+
+        if("ALL".equals(Constants.WHOES_APPOINTMENT)){
+            //TODO query all appointments
+        }else {
+            //TODO query the specific visitor's appointments
+        }
 
         //filter visitors who forget to checkout
         Loader<Cursor> lc = new CursorLoader(getActivity(), resourceUri, null, null, null, null);

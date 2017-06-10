@@ -15,10 +15,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.VisitorWelcomeActivity;
+import com.liuyufei.bmc_android.model.Visitor;
+import com.liuyufei.bmc_android.utility.Constants;
 
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -152,6 +155,7 @@ public class AdminActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Check  In page called", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AdminActivity.this,VisitorWelcomeActivity.class);
                     startActivity(intent);
                 }
@@ -169,5 +173,19 @@ public class AdminActivity extends AppCompatActivity
                 .replace(R.id.content_frame, fragment)
                 .commit();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(Constants.STR_ACIVITY_NAME.equals("VisitorWelcomeActivity")){
+            goManagementFragment(APPOINTMENT);
+        }else if(Constants.STR_ACIVITY_NAME.equals("VisitorCheckInActivity")){
+            goManagementFragment(VISITOR);
+        }
+
+        Constants.STR_ACIVITY_NAME = "DEFAULT";
+        //may be more fragment navigation...
+        Toast.makeText(this,"came from visitor page",Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,10 +9,8 @@ import java.util.Calendar;
  */
 
 public class Constants {
-
     public static String STR_ACIVITY_NAME = "AdminActivity";
     public static String WHOES_APPOINTMENT = "ALL";
-
 
 
     public static String getCurrentTimeAsString(){
