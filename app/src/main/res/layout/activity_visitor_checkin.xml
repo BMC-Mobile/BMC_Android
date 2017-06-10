@@ -14,6 +14,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
+                android:hint="Name"
+                android:ems="10"
+                android:layout_marginTop="115dp"
+                android:id="@+id/name_txt"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/company_txt" />
+
+            <TextView
+                android:text="Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_lbl"
+                android:layout_marginEnd="41dp"
+                android:layout_alignBaseline="@+id/name_txt"
+                android:layout_alignBottom="@+id/name_txt"
+                android:layout_toStartOf="@+id/name_txt" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
                 android:hint="Company Name"
                 android:ems="10"
                 android:id="@+id/company_txt"
@@ -70,31 +91,20 @@
                 android:text="Purpose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/staff_lbl"
-                android:layout_alignEnd="@+id/staff_lbl"
+                android:layout_below="@+id/time_lbl"
+                android:layout_alignEnd="@+id/time_lbl"
                 android:layout_marginTop="24dp"
                 android:id="@+id/purpose_lbl" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Name"
-                android:ems="10"
-                android:layout_marginTop="115dp"
-                android:id="@+id/name_txt"
-                android:layout_alignParentTop="true"
-                android:layout_alignStart="@+id/company_txt" />
 
-            <TextView
-                android:text="Name"
-                android:layout_width="wrap_content"
+
+            <Spinner
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/name_lbl"
-                android:layout_marginEnd="41dp"
-                android:layout_alignBaseline="@+id/name_txt"
-                android:layout_alignBottom="@+id/name_txt"
-                android:layout_toStartOf="@+id/name_txt" />
+                android:layout_alignTop="@+id/purpose_lbl"
+                android:layout_alignStart="@+id/staff_spi"
+                android:id="@+id/purpose_spi"
+                android:spinnerMode="dropdown" />
 
             <Button
                 android:text="Check In"
@@ -105,13 +115,28 @@
                 android:layout_below="@+id/purpose_lbl"
                 android:layout_centerHorizontal="true" />
 
-            <Spinner
-                android:layout_width="match_parent"
+            <TextView
+                android:text="Appointment Time"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/purpose_lbl"
-                android:layout_alignStart="@+id/staff_spi"
-                android:id="@+id/purpose_spi"
-                android:spinnerMode="dropdown" />
+                android:id="@+id/time_lbl"
+                android:layout_below="@+id/staff_lbl"
+                android:layout_alignEnd="@+id/staff_lbl"
+                android:layout_marginTop="19dp"/>
+
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/time_lbl"
+                android:layout_alignStart="@+id/staff_spi"></DatePicker>
+
+            <TimePicker
+                android:id="@+id/time_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/time_lbl"
+                android:layout_alignStart="@+id/staff_spi"></TimePicker>
 
         </RelativeLayout>
 
