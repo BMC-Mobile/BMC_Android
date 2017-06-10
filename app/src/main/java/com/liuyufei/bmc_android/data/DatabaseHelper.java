@@ -137,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         for(int i=0;i<items;i++){
             long visitor = visitorsID.get(i);
             long staff = staffID.get(i);
-            values.put(AppointmentEntry.COLUMN_DESCRIPTION, "Come to play LOL "+i);
+            values.put(AppointmentEntry.COLUMN_DESCRIPTION, "General Business");
             values.put(AppointmentEntry.COLUMN_STAFF, staff);
             values.put(AppointmentEntry.COLUMN_VISITOR, visitor);
             cal.setTime(new Date());
