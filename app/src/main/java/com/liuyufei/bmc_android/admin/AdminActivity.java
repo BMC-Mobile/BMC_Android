@@ -15,11 +15,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.VisitorWelcomeActivity;
-import com.liuyufei.bmc_android.model.Visitor;
 import com.liuyufei.bmc_android.utility.Constants;
 
 public class AdminActivity extends AppCompatActivity

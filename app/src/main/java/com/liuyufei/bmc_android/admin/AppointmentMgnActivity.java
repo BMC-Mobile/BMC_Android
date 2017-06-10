@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.databinding.ActivityAppointmentMgnBinding;
-import com.liuyufei.bmc_android.databinding.ActivityEditStaffBinding;
 import com.liuyufei.bmc_android.model.Appointment;
 import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.model.Visitor;

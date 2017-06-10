@@ -4,6 +4,7 @@ import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -45,6 +46,7 @@ public class VisitorCheckIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_visitor_checkin);
         name_txt = (EditText) findViewById(R.id.name_txt);
         company_txt = (EditText) findViewById(R.id.company_txt);

@@ -25,10 +25,25 @@ public class AppointmentCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView visitorName = (TextView) view.findViewById(R.id.appDesc);
-        int textColumn = cursor.getColumnIndex(BMCContract.AppointmentEntry.COLUMN_DESCRIPTION);
-        String text = cursor.getString(textColumn);
-        visitorName.setText(text);
+        TextView description = (TextView) view.findViewById(R.id.appDesc);
+        TextView staffName = (TextView) view.findViewById(R.id.staff_name);
+        TextView visitorName = (TextView) view.findViewById(R.id.visitor_name);
+        TextView appointmentDate = (TextView) view.findViewById(R.id.appointment_date);
+
+        int textDesc = cursor.getColumnIndex(BMCContract.AppointmentEntry.COLUMN_DESCRIPTION);
+        int textStaffName = cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME);
+        int textVisitorName = cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME);
+        int textAppointmentDate = cursor.getColumnIndex(BMCContract.AppointmentEntry.COLUMN_DATETIME);
+
+        String strStaffName = cursor.getString(textStaffName);
+        String strDescription = cursor.getString(textDesc);
+        String strVisitorName = cursor.getString(textVisitorName);
+        String strAppointmentDate = cursor.getString(textAppointmentDate);
+
+        staffName.setText(strStaffName);
+        description.setText(strDescription);
+        visitorName.setText(strVisitorName);
+        appointmentDate.setText(strAppointmentDate);
 
     }
 }

@@ -4,19 +4,104 @@
     android:layout_height="match_parent"
     tools:context="com.liuyufei.bmc_android.admin.AppointmentFragment">
 
-    <TextView
-        android:id="@+id/id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textAppearance="?attr/textAppearanceListItem" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:textSize="20sp"
+                android:layout_weight="6"
+                android:layout_margin="@dimen/text_margin_1"
+                android:text="Visitor Name: "
+                android:layout_width="match_parent"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_height="match_parent" />
+            <TextView
+                android:textSize="20sp"
+                android:id="@+id/visitor_name"
+                android:layout_weight="4"
+                android:textAlignment="viewEnd"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_margin="@dimen/text_margin_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
-    <TextView
-        android:id="@+id/appDesc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:textAppearance="?attr/textAppearanceListItem" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_weight="5.5"
+                android:text="Appointment With: "
+                android:layout_margin="@dimen/text_margin_1"
+                android:layout_width="match_parent"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/staff_name"
+                android:textSize="18sp"
+                android:layout_weight="4.5"
+                android:textAlignment="viewEnd"
+                android:layout_margin="@dimen/text_margin_1"
+                android:layout_width="match_parent"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/appDesc"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin_1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="Appointment Date"
+                android:textSize="14sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin_1" />
+
+            <TextView
+                android:id="@+id/appointment_date"
+                android:textSize="14sp"
+                android:textAlignment="viewEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin_1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
