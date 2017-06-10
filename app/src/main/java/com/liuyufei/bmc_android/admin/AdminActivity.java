@@ -154,6 +154,7 @@ public class AdminActivity extends AppCompatActivity
             fab.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Toast.makeText(view.getContext(), "Check  In page called", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(AdminActivity.this,VisitorWelcomeActivity.class);
                     startActivity(intent);
                 }
