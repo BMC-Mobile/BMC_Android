@@ -20,6 +20,7 @@ import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.data.BMCQueryHandler;
 import com.liuyufei.bmc_android.model.Staff;
+import com.liuyufei.bmc_android.model.Visitor;
 import com.liuyufei.bmc_android.utility.Constants;
 
 import java.util.ArrayList;
@@ -59,8 +60,6 @@ public class VisitorCheckIn extends AppCompatActivity {
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         purpose_spi.setAdapter(dataAdapter);
 
-
-
         staff_spi = (Spinner) findViewById(R.id.staff_spi);
         checkBTN = (Button) findViewById(R.id.checkin_btn);
 
@@ -78,9 +77,17 @@ public class VisitorCheckIn extends AppCompatActivity {
                 }
             });
         } else {
-            String mobile = getIntent().getExtras().getString("mobile");
-            contact_txt.setText(mobile);
-            //query db for staffs
+            Visitor visitor = (Visitor) getIntent().getExtras().get("visitor");
+            if(visitor!=null){
+                //for existing visitor
+                name_txt.setText(visitor.name.get());
+                company_txt.setText(visitor.bussinessname.get());
+                contact_txt.setText(visitor.mobile.get());
+            }else{
+                //for the new coming visitor
+                String mobile = getIntent().getExtras().getString("mobile");
+                contact_txt.setText(mobile);
+            }
             checkBTN.setText("Check In");
             checkBTN.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,24 +155,20 @@ public class VisitorCheckIn extends AppCompatActivity {
                                 contact_txt.setEnabled(false);
                                 // set Staff spinner position
                                 int indexOfStaff = 0;
-                                for(Staff staff:staffList){
-                                    if(staff.name.get().equals(staffName)){
-                                        break;
-                                    }else{
-                                        indexOfStaff++;
-                                    }
+                                for(;indexOfStaff<staffList.size();indexOfStaff++){
+                                    if(staffList.get(indexOfStaff).name.get().equals(staffName)) break;
                                 }
+                                //set default
+                                if(indexOfStaff==staffList.size()) indexOfStaff=0;
                                 staff_spi.setSelection(indexOfStaff);
 
                                 // set purpose spinner position
                                 int indexOfPurpose = 0;
-                                for(String purp:purposeList){
-                                    if(purp.equals(purpose)){
-                                        break;
-                                    }else{
-                                        indexOfPurpose++;
-                                    }
+                                for(;indexOfPurpose<purposeList.size();indexOfPurpose++){
+                                    if(purposeList.get(indexOfPurpose).equals(purpose)) break;
                                 }
+                                //set default
+                                if(indexOfPurpose==purposeList.size())indexOfPurpose = 0;
                                 purpose_spi.setSelection(indexOfPurpose);
 
                             }
