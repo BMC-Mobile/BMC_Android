@@ -4,7 +4,6 @@ package com.liuyufei.bmc_android.admin;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
@@ -28,8 +27,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.liuyufei.bmc_android.R;
-import com.liuyufei.bmc_android.VisitorCheckIn;
-import com.liuyufei.bmc_android.VisitorWelcomeActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.data.BMCQueryHandler;
 
@@ -77,12 +74,25 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
                 String visitorName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME));
 
 
-                Intent intentToAppointmentForm = new Intent(getActivity(),VisitorCheckIn.class);
-                intentToAppointmentForm.putExtra("check_status",CHECKOUT);
-                intentToAppointmentForm.putExtra("visitorID",visitorID);
-                intentToAppointmentForm.putExtra("visitorName",visitorName);
+                //confirm checkout a visitor by admin?
+                new AlertDialog.Builder(VisitorFragment.this.getActivity())
+                        .setTitle("Confirm Checkout?")
+                        .setMessage("Confirm help "+visitorName+" checkout?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                startActivity(intentToAppointmentForm);
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                //update checkout status
+//                                Uri uri =  Uri.withAppendedPath(BMCContract.VisitorEntry.CONTENT_URI, String.valueOf(visitorID));
+                                String selection = BMCContract.VisitorEntry._ID + "=?";
+                                String[] arguments = new String[1];
+                                arguments[0] = String.valueOf(visitorID);
+                                BMCQueryHandler queryHandler =  new BMCQueryHandler(VisitorFragment.this.getActivity().getContentResolver());
+                                ContentValues values = new ContentValues();
+                                values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, CHECKOUT);
+                                queryHandler.startUpdate(1, null, BMCContract.VisitorEntry.CONTENT_URI,values, selection, arguments);
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
 
             }
         });
@@ -98,7 +108,7 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
         Uri resourceUri = BMCContract.VisitorEntry.CONTENT_URI;
         String[] selectionArgs = {CHECKIN.toString()};
         String selection = BMCContract.VisitorEntry.COLUMN_CHECK_STATUS+"=?";
-        String orderBy = BMCContract.VisitorEntry.COLUMN_LASTLOGIN_TIME+" DESC";
+        String orderBy = null;
 
         if (args != null) {
             selectionArgs = args.getStringArray("selectionArgs");
