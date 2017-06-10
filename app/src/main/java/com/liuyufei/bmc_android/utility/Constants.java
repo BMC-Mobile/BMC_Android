@@ -13,6 +13,7 @@ public class Constants {
     public static String WHOES_APPOINTMENT = "ALL";
 
 
+
     public static String getCurrentTimeAsString(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Calendar cal = Calendar.getInstance();

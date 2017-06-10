@@ -173,6 +173,7 @@ public class VisitorCheckIn extends AppCompatActivity {
                     }
                 };
 
+
         String selection = BMCContract.AppointmentEntry.COLUMN_VISITOR + "=?";
         String[] args = {visitorID.toString()};
         String orderBy = BMCContract.AppointmentEntry.COLUMN_CREATED_WHEN+" DESC";
