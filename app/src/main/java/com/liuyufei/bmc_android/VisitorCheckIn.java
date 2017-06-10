@@ -19,6 +19,7 @@ import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
 
 public class VisitorCheckIn extends AppCompatActivity {
 
+
     EditText name_txt;
     EditText company_txt;
     EditText contact_txt;
