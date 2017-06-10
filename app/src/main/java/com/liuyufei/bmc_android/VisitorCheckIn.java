@@ -157,6 +157,7 @@ public class VisitorCheckIn extends AppCompatActivity {
                                 for(int indexOfStaff = 0;indexOfStaff<staffList.size();indexOfStaff++){
                                     if(staffList.get(indexOfStaff).name.get().equals(staffName)){
                                         staff_spi.setSelection(indexOfStaff);
+                                        //??
                                         break;
                                     }
                                 }
@@ -165,6 +166,7 @@ public class VisitorCheckIn extends AppCompatActivity {
                                 for(int indexOfPurpose = 0;indexOfPurpose<purposeList.size();indexOfPurpose++){
                                     if(purposeList.get(indexOfPurpose).equals(purpose)){
                                         purpose_spi.setSelection(indexOfPurpose);
+                                        //??
                                         break;
                                     }
                                 }
