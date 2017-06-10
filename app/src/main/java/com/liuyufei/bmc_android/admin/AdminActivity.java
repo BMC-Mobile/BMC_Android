@@ -54,7 +54,7 @@ public class AdminActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        goManagementFragment(APPOINTMENT);
     }
 
     @Override
@@ -184,7 +184,5 @@ public class AdminActivity extends AppCompatActivity
         }
 
         Constants.STR_ACIVITY_NAME = "DEFAULT";
-        //may be more fragment navigation...
-        Toast.makeText(this,"came from visitor page",Toast.LENGTH_SHORT).show();
     }
 }

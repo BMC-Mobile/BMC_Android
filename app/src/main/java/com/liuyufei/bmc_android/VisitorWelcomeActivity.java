@@ -55,6 +55,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                         //find all appointments relevant to the visitor.
                                         //Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,AdminActivity.class);
                                         Constants.STR_ACIVITY_NAME = "VisitorWelcomeActivity";
+                                        //TODO
 
                                     }else{
                                         //check if the visitor is new
