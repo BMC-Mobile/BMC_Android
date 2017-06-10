@@ -160,7 +160,6 @@ public class VisitorCheckIn extends AppCompatActivity {
                                         break;
                                     }
                                 }
-
                                 // set purpose spinner position
                                 for(int indexOfPurpose = 0;indexOfPurpose<purposeList.size();indexOfPurpose++){
                                     if(purposeList.get(indexOfPurpose).equals(purpose)){
