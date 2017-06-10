@@ -167,6 +167,7 @@ public class VisitorCheckIn extends AppCompatActivity {
                                     if(purposeList.get(indexOfPurpose).equals(purpose)){
                                         purpose_spi.setSelection(indexOfPurpose);
                                         //??
+                                        //111
                                         break;
                                     }
                                 }
