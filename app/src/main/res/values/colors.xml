@@ -3,7 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-
+    <color name="colorButtonFont">#FFFFFF</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
 
     <color name="green">#32bc39</color>
     <color name="blue">#4286f4</color>
@@ -12,4 +13,22 @@
     <color name="purple">#7f10e0</color>
     <color name="orange">#e0970f</color>
     <color name="pink">#b20ee0</color>
+
+    <!-- color scheme -->
+    <color name="color50">#e0f2f1</color>
+    <color name="color100">#B2DFDB</color>
+    <color name="color200">#80CBC4</color>
+    <color name="color300">#4DB6AC</color>
+    <color name="color400">#26A69A</color>
+    <color name="color500">#009688</color>
+    <color name="color600">#00897B</color>
+    <color name="color700">#00796B</color>
+    <color name="color800">#00695C</color>
+    <color name="color900">#004D40</color>
+    <color name="colorA100">#A7FFEB</color>
+    <color name="colorA200">#64FFDA</color>
+    <color name="colorA400">#1DE9B6</color>
+    <color name="colorA700">#00BFA5</color>
+
+
 </resources>

@@ -44,8 +44,13 @@
             android:name=".admin.AppointmentMgnActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="landscape" />
-        <activity android:name=".VisitorWelcomeActivity" android:parentActivityName=".admin.AdminActivity"></activity>
-        <activity android:name=".VisitorCheckIn" android:parentActivityName=".admin.AdminActivity"></activity>
+        <activity
+            android:name=".VisitorWelcomeActivity"
+            android:parentActivityName=".admin.AdminActivity" />
+        <activity
+            android:name=".VisitorCheckIn"
+            android:parentActivityName=".admin.AdminActivity" />
+        <activity android:name=".login.LoginActivity"></activity>
     </application>
 
 </manifest>

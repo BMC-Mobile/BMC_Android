@@ -10,5 +10,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="btn_string_login">LOGIN</string>
+    <string name="btn_ring_reception">RING RECEPTION</string>
+    <string name="prompt_email">Mobile</string>
+    <string name="prompt_password">Password (optional)</string>
+    <!-- Constant Strings -->
+    <string name="PREF_NAME">BMCPref</string>
+    <string name="IsLoggedIn">IsLoggedIn</string>
+    <string name="logo">just a png file</string>
+    <integer name="PRIVATE_MODE">0</integer>
 </resources>
