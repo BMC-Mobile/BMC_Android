@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.liuyufei.bmc_android.data.BMCContract;
+import com.liuyufei.bmc_android.model.Staff;
+import com.liuyufei.bmc_android.model.Visitor;
 import com.liuyufei.bmc_android.utility.Constants;
 
 import static com.liuyufei.bmc_android.R.id.checkbtn;
@@ -55,8 +57,14 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                                         //find all appointments relevant to the visitor.
                                         //Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,AdminActivity.class);
                                         Constants.STR_ACIVITY_NAME = "VisitorWelcomeActivity";
-                                        //TODO
-
+                                        String visitorName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_NAME));
+                                        String visitorCompanyName = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_BUSINESS_NAME));
+                                        String visitorMobile = cursor.getString(cursor.getColumnIndex(BMCContract.VisitorEntry.COLUMN_MOBILE));
+                                        Visitor visitor = new Visitor(-1,visitorName,visitorCompanyName,visitorMobile);
+                                        Intent intentToAppointmentForm = new Intent(VisitorWelcomeActivity.this,VisitorCheckIn.class);
+                                        intentToAppointmentForm.putExtra("visitor",visitor);
+                                        intentToAppointmentForm.putExtra("check_status",CHECKIN);
+                                        startActivity(intentToAppointmentForm);
                                     }else{
                                         //check if the visitor is new
                                         //if new go to the appointment creation page
@@ -74,7 +82,7 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
                 String selection = BMCContract.VisitorEntry.COLUMN_MOBILE+"=?";
                 String[] selectionArgs = {inputMobile};
                 queryHandler.startQuery(0, null, BMCContract.VisitorEntry.CONTENT_URI,
-                        new String[] {BMCContract.VisitorEntry.COLUMN_NAME}, selection, selectionArgs,
+                        new String[] {BMCContract.VisitorEntry.COLUMN_NAME, BMCContract.VisitorEntry.COLUMN_BUSINESS_NAME, BMCContract.VisitorEntry.COLUMN_MOBILE}, selection, selectionArgs,
                         null);
 
             }
