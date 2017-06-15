@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.login_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 EditText editText = (EditText) findViewById(R.id.pwd_value);
                 String inputPwd = editText.getText().toString();
                 if("admin".equals(inputPwd)){
