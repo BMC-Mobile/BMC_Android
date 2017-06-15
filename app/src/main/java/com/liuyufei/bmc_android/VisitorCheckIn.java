@@ -1,5 +1,7 @@
 package com.liuyufei.bmc_android;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.AsyncQueryHandler;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -13,8 +15,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
@@ -23,9 +27,12 @@ import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.model.Visitor;
 import com.liuyufei.bmc_android.utility.Constants;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKOUT;
@@ -41,7 +48,9 @@ public class VisitorCheckIn extends AppCompatActivity {
     Spinner staff_spi;
     Button checkBTN;
     List<Staff> staffList = new ArrayList<>();
-    List<String> purposeList = Arrays.asList("General Business","Drop In","Scheduled Appointment","Other");
+    List<String> purposeList = Arrays.asList("General Business", "Drop In", "Scheduled Appointment", "Other");
+    EditText datePicked;
+    EditText timePicked;
 
 
     @Override
@@ -51,6 +60,44 @@ public class VisitorCheckIn extends AppCompatActivity {
         setContentView(R.layout.activity_visitor_checkin);
         name_txt = (EditText) findViewById(R.id.name_txt);
         company_txt = (EditText) findViewById(R.id.company_txt);
+
+        datePicked = (EditText) findViewById(R.id.date_picked);
+        datePicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final SimpleDateFormat dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
+                Calendar newCalendar = Calendar.getInstance();
+                DatePickerDialog fromDatePickerDialog = new DatePickerDialog(v.getContext(), new DatePickerDialog.OnDateSetListener() {
+
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        datePicked.setText(dateFormatter.format(newDate.getTime()));
+                    }
+
+                }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+                fromDatePickerDialog.show();
+            }
+        });
+
+
+        timePicked = (EditText) findViewById(R.id.time_picked);
+        timePicked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar newCalendar = Calendar.getInstance();
+                TimePickerDialog fromDatePickerDialog = new TimePickerDialog(v.getContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        timePicked.setText(hourOfDay+":"+minute);
+                    }
+
+                }, newCalendar.get(Calendar.HOUR), newCalendar.get(Calendar.MINUTE), true);
+                fromDatePickerDialog.show();
+            }
+        });
+
+
         contact_txt = (EditText) findViewById(R.id.contact_txt);
         //hard code purpose
         purpose_spi = (Spinner) findViewById(R.id.purpose_spi);
@@ -78,12 +125,12 @@ public class VisitorCheckIn extends AppCompatActivity {
             });
         } else {
             Visitor visitor = (Visitor) getIntent().getExtras().get("visitor");
-            if(visitor!=null){
+            if (visitor != null) {
                 //for existing visitor
                 name_txt.setText(visitor.name.get());
                 company_txt.setText(visitor.bussinessname.get());
                 contact_txt.setText(visitor.mobile.get());
-            }else{
+            } else {
                 //for the new coming visitor
                 String mobile = getIntent().getExtras().getString("mobile");
                 contact_txt.setText(mobile);
@@ -97,12 +144,13 @@ public class VisitorCheckIn extends AppCompatActivity {
             });
         }
 
+
     }
 
 
     private void queryStaff() {
 
-        if(staffList.size()!=0) return;
+        if (staffList.size() != 0) return;
 
         AsyncQueryHandler queryHandler =
                 new AsyncQueryHandler(getContentResolver()) {
@@ -154,23 +202,19 @@ public class VisitorCheckIn extends AppCompatActivity {
                                 contact_txt.setText(visitorMobile);
                                 contact_txt.setEnabled(false);
                                 // set Staff spinner position
-                                int indexOfStaff = 0;
-                                for(;indexOfStaff<staffList.size();indexOfStaff++){
-                                    if(staffList.get(indexOfStaff).name.get().equals(staffName)) break;
+                                for (int indexOfStaff = 0; indexOfStaff < staffList.size(); indexOfStaff++) {
+                                    if (staffList.get(indexOfStaff).name.get().equals(staffName)) {
+                                        staff_spi.setSelection(indexOfStaff);
+                                        break;
+                                    }
                                 }
-                                //set default
-                                if(indexOfStaff==staffList.size()) indexOfStaff=0;
-                                staff_spi.setSelection(indexOfStaff);
-
                                 // set purpose spinner position
-                                int indexOfPurpose = 0;
-                                for(;indexOfPurpose<purposeList.size();indexOfPurpose++){
-                                    if(purposeList.get(indexOfPurpose).equals(purpose)) break;
+                                for (int indexOfPurpose = 0; indexOfPurpose < purposeList.size(); indexOfPurpose++) {
+                                    if (purposeList.get(indexOfPurpose).equals(purpose)) {
+                                        purpose_spi.setSelection(indexOfPurpose);
+                                        break;
+                                    }
                                 }
-                                //set default
-                                if(indexOfPurpose==purposeList.size())indexOfPurpose = 0;
-                                purpose_spi.setSelection(indexOfPurpose);
-
                             }
                         } finally {
                             cursor.close();
@@ -180,7 +224,7 @@ public class VisitorCheckIn extends AppCompatActivity {
 
         String selection = BMCContract.AppointmentEntry.COLUMN_VISITOR + "=?";
         String[] args = {visitorID.toString()};
-        String orderBy = BMCContract.AppointmentEntry.COLUMN_CREATED_WHEN+" DESC";
+        String orderBy = BMCContract.AppointmentEntry.COLUMN_CREATED_WHEN + " DESC";
         queryHandler.startQuery(0, null, BMCContract.AppointmentEntry.CONTENT_URI, null, selection, args, orderBy);
     }
 
