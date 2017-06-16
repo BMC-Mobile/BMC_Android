@@ -1,77 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/app_bg"
+    android:padding="30dp"
     tools:context="com.liuyufei.bmc_android.login.LoginActivity">
+    <ImageView
+        android:id="@+id/company_logo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:background="@drawable/bmc"
+        android:contentDescription="@string/logo"
+         />
 
-    <ScrollView
+    <ImageView
+        android:id="@+id/company_logo_text"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/app_bg"
-            android:padding="30dp"
-            android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/company_logo"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_gravity="center"
+        android:background="@drawable/company_logo_text"
+        android:contentDescription="@string/logo" />
 
-            <ImageView
-                android:id="@+id/company_logo"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/bmc"
-                android:contentDescription="@string/logo"
-                android:scaleType="centerInside" />
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/company_logo_text"
+        android:hint="@string/prompt_email"
+        android:maxLines="1"
+        android:textSize="24sp" />
 
-            <ImageView
-                android:id="@+id/company_logo_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/company_logo_text"
-                android:contentDescription="@string/logo"
-                android:scaleType="centerInside" />
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/username"
+        android:layout_marginTop="10dp"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/prompt_email"
-                android:maxLines="1"
-                android:textSize="24sp" />
+    <Button
+        android:id="@+id/login_button"
+        style="@style/AppTheme.Button"
+        android:layout_below="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/btn_string_login"
+        android:textSize="24sp" />
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:hint="@string/prompt_password"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/login_button"
-                style="@style/AppTheme.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/btn_string_login"
-                android:textSize="24sp" />
-
-            <Button
-                android:id="@+id/ring_button"
-                style="@style/AppTheme.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/btn_ring_reception"
-                android:textSize="24sp" />
-        </LinearLayout>
-    </ScrollView>
-
-</LinearLayout>
+    <Button
+        android:id="@+id/ring_button"
+        style="@style/AppTheme.Button"
+        android:layout_below="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/btn_ring_reception"
+        android:textSize="24sp" />
+</RelativeLayout>
