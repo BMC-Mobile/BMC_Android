@@ -22,7 +22,7 @@ public class SessionManager {
 
     public SessionManager(Context context) {
         this._context=context;
-        pref=_context.getSharedPreferences(String.valueOf(R.string.PREF_NAME),R.integer.PRIVATE_MODE);
+        pref=_context.getSharedPreferences(String.valueOf(R.string.PREF_NAME),Context.MODE_PRIVATE);
         editor=pref.edit();
     }
 
