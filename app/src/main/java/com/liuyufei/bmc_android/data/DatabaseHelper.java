@@ -105,10 +105,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(StaffEntry.COLUMN_MOBILE, "123456");
             values.put(StaffEntry.COLUMN_TITLE, "President");
             values.put(StaffEntry.COLUMN_PHOTO, R.drawable.staff);
-
             staffID.add(db.insert(StaffEntry.TABLE_NAME, null, values));
             values.clear();
         }
+
+
+        values.put(StaffEntry.COLUMN_DEPARTMENT, "BMC");
+        values.put(StaffEntry.COLUMN_NAME, "BMC_ADMIN");
+        values.put(StaffEntry.COLUMN_MOBILE, "123456");
+        values.put(StaffEntry.COLUMN_TITLE, "President");
+        values.put(StaffEntry.COLUMN_PHOTO, R.drawable.staff);
+
+        staffID.add(db.insert(StaffEntry.TABLE_NAME, null, values));
+        values.clear();
 
         //create visitors
         for(int i=0;i<items;i++){
