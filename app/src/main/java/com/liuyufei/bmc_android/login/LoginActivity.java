@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.liuyufei.bmc_android.MainActivity;
+import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.model.Staff;
 
@@ -32,7 +33,7 @@ import com.liuyufei.bmc_android.model.Staff;
  * */
 public class LoginActivity extends AppCompatActivity {
 
-    static String DEFAULT_PASSWORD = "1234";
+    static String DEFAULT_PASSWORD = "123456";
     static String TAG = "LoginActivity";
 
     // ImageView
@@ -143,21 +144,16 @@ public class LoginActivity extends AppCompatActivity {
         AsyncQueryHandler queryHandler = new AsyncQueryHandler(getContentResolver()){
             @Override
             protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
-                Staff staff = new Staff(0,null,null,null,null,null);
                 try{
                     if(cursor.moveToNext()){
-                        Integer id = cursor.getInt(cursor.getColumnIndex(BMCContract.StaffEntry._ID));
                         String name = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
                         String mobileNumber = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
-                        String department=cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_DEPARTMENT));
-                        String photo=cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_PHOTO));
-                        String title=cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_TITLE));
 
                         if (name.trim().length()>0&&_mobile.trim().length()>0){
                             // create login session
                             if(_password.trim().equals(DEFAULT_PASSWORD)){
                                 session.createLoginSession(name,mobileNumber);
-                                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                Intent i = new Intent(getApplicationContext(), AdminActivity.class);
                                 startActivity(i);
                                 finish();
                             }else {
