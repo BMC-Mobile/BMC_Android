@@ -36,26 +36,26 @@
         <activity
             android:name=".admin.EditStaffActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".admin.AdminActivity"/>
+            android:parentActivityName=".admin.AdminActivity"
+            android:screenOrientation="landscape" />
 
         <provider
             android:name=".data.BMCProvider"
             android:authorities="com.bmc.dataprovider"
-            android:exported="false"/>
+            android:exported="false" />
 
         <activity
             android:name=".admin.AppointmentMgnActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="landscape"
-            android:parentActivityName=".admin.AdminActivity"/>
+            android:parentActivityName=".admin.AdminActivity"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".VisitorWelcomeActivity"
             android:parentActivityName=".admin.AdminActivity" />
         <activity
             android:name=".VisitorCheckIn"
             android:parentActivityName=".admin.AdminActivity" />
-        <activity android:name=".login.LoginActivity"></activity>
+        <activity android:name=".login.LoginActivity" />
     </application>
 
 </manifest>

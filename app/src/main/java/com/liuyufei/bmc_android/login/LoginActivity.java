@@ -1,7 +1,9 @@
 package com.liuyufei.bmc_android.login;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -32,9 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     static String DEFAULT_PASSWORD = "123456";
     static String TAG = "LoginActivity";
 
-    // ImageView
-    ImageView image;
-
     // Email, password edittext
     EditText txtUsername, txtPassword;
     // login button
@@ -48,11 +47,12 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
         setContentView(R.layout.activity_login);
         // Session Manager
         session = new SessionManager(getApplicationContext());
 
-        image = (ImageView) findViewById(R.id.imgLogo);
+
 
         // Email, Password input text
         txtUsername = (EditText) findViewById(R.id.username);
@@ -142,13 +142,13 @@ public class LoginActivity extends AppCompatActivity {
             protected void onQueryComplete(int token, Object cookie, Cursor cursor) {
                 try{
                     if(cursor.moveToNext()){
-                        String name = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
+                        //String name = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
                         String mobileNumber = cursor.getString(cursor.getColumnIndex(BMCContract.StaffEntry.COLUMN_NAME));
 
-                        if (name.trim().length()>0&& _adminName.trim().length()>0){
+                        if (mobileNumber.trim().length()>0&& _adminName.trim().length()>0){
                             // create login session
                             if(_password.trim().equals(DEFAULT_PASSWORD)){
-                                session.createLoginSession(name,mobileNumber);
+                                session.createLoginSession(mobileNumber,mobileNumber);
                                 Intent i = new Intent(getApplicationContext(), AdminActivity.class);
                                 startActivity(i);
                                 finish();
@@ -163,7 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-        String selection = BMCContract.StaffEntry.COLUMN_NAME + "=?";
+        String selection = BMCContract.StaffEntry.COLUMN_MOBILE + "=?";
         String[] args = {_adminName};
 
         // query data when it is done, call on query complete
