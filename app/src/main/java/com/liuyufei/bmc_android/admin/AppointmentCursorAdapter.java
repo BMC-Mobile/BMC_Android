@@ -25,8 +25,8 @@ public class AppointmentCursorAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView description = (TextView) view.findViewById(R.id.appDesc);
-        TextView staffName = (TextView) view.findViewById(R.id.staff_name);
+//        TextView description = (TextView) view.findViewById(R.id.appDesc);
+//        TextView staffName = (TextView) view.findViewById(R.id.staff_name);
         TextView visitorName = (TextView) view.findViewById(R.id.visitor_name);
         TextView appointmentDate = (TextView) view.findViewById(R.id.appointment_date);
 
@@ -40,8 +40,8 @@ public class AppointmentCursorAdapter extends CursorAdapter {
         String strVisitorName = cursor.getString(textVisitorName);
         String strAppointmentDate = cursor.getString(textAppointmentDate);
 
-        staffName.setText(strStaffName);
-        description.setText(strDescription);
+//        staffName.setText(strStaffName);
+//        description.setText(strDescription);
         visitorName.setText(strVisitorName);
         appointmentDate.setText(strAppointmentDate);
 
