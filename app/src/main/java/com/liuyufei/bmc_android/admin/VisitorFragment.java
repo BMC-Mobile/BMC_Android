@@ -136,23 +136,15 @@ public class VisitorFragment extends Fragment implements LoaderManager.LoaderCal
             }
 
             @Override
-            public boolean onQueryTextChange(final String newText) {
-                if (newText.length() >= 1) {
-                    if (canRun) {
-                        canRun = false;
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                canRun = true;
-                                String selection = BMCContract.VisitorEntry.COLUMN_NAME + " like ?";
-                                String[] selectionArgs = {"%" + newText + "%"};
-                                Bundle bundle = new Bundle();
-                                bundle.putString("selection", selection);
-                                bundle.putStringArray("selectionArgs", selectionArgs);
-                                getLoaderManager().restartLoader(URL_LOADER, bundle, VisitorFragment.this);
-                            }
-                        }, 2000);
-                    }
+            public boolean onQueryTextChange(String newText) {
+                final String input = newText;
+                if (newText.length() > 1) {
+                    String selection = BMCContract.VisitorEntry.COLUMN_NAME + " like ?";
+                    String[] selectionArgs = {"%" + input + "%"};
+                    Bundle bundle = new Bundle();
+                    bundle.putString("selection", selection);
+                    bundle.putStringArray("selectionArgs", selectionArgs);
+                    getLoaderManager().restartLoader(URL_LOADER, bundle, VisitorFragment.this);
                 } else {
                     //select all records
                     getLoaderManager().restartLoader(URL_LOADER, null, VisitorFragment.this);

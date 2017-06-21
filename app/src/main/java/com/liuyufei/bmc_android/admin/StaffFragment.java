@@ -168,23 +168,14 @@ public class StaffFragment extends Fragment implements LoaderManager.LoaderCallb
 
             @Override
             public boolean onQueryTextChange(final String newText) {
-                if (newText.length() >=1) {
-                    if (canRun) {
-                        canRun = false;
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                canRun = true;
-                                String selection = BMCContract.StaffEntry.COLUMN_NAME + " like ?";
-                                String[] selectionArgs = {"%"+newText+"%"};
-                                Bundle bundle = new Bundle();
-                                bundle.putString("selection", selection);
-                                bundle.putStringArray("selectionArgs", selectionArgs);
-                                bundle.putString("table", BMCContract.StaffEntry.TABLE_NAME);
-                                getLoaderManager().restartLoader(URL_LOADER, bundle, StaffFragment.this);
-                            }
-                        }, 2000);
-                    }
+                if (newText.length() >1) {
+                    String selection = BMCContract.StaffEntry.COLUMN_NAME + " like ?";
+                    String[] selectionArgs = {"%"+newText+"%"};
+                    Bundle bundle = new Bundle();
+                    bundle.putString("selection", selection);
+                    bundle.putStringArray("selectionArgs", selectionArgs);
+                    bundle.putString("table", BMCContract.StaffEntry.TABLE_NAME);
+                    getLoaderManager().restartLoader(URL_LOADER, bundle, StaffFragment.this);
                 }else{
                     //select all records
                     getLoaderManager().restartLoader(URL_LOADER, null, StaffFragment.this);
