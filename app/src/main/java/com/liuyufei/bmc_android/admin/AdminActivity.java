@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.liuyufei.bmc_android.MainActivity;
 import com.liuyufei.bmc_android.R;
 import com.liuyufei.bmc_android.VisitorWelcomeActivity;
+import com.liuyufei.bmc_android.login.LoginActivity;
+import com.liuyufei.bmc_android.login.SessionManager;
 import com.liuyufei.bmc_android.utility.Constants;
 
 public class AdminActivity extends AppCompatActivity
@@ -32,6 +34,7 @@ public class AdminActivity extends AppCompatActivity
     public static final String BAR = "Bar";
     public static final String VISITOR = "Visitor";
     FloatingActionButton fab;
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +110,12 @@ public class AdminActivity extends AppCompatActivity
         } else if (id == R.id.appointmentMag) {
             goManagementFragment(APPOINTMENT);
         } else if (id == R.id.logout) {
-            Intent intent = new Intent(this,MainActivity.class);
+            // point to login activity
+            session = new SessionManager(getApplicationContext());
+            if(session.isLoggedIn()){
+                session.logoutUser();
+            }
+            Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         } else if (id == R.id.statistic_appointment) {
             goCharFragment(PIE);
