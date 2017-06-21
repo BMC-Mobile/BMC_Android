@@ -27,28 +27,36 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
+
+        <!--
+         android:configChanges="orientation|screenSize"
+         -->
         <activity
             android:name=".admin.AdminActivity"
-            android:configChanges="orientation|screenSize"
             android:label="@string/title_activity_admin"
-            android:screenOrientation="landscape"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <!--
+         android:configChanges="orientation|screenSize"
+         -->
         <activity
             android:name=".admin.EditStaffActivity"
-            android:configChanges="orientation|screenSize"
+            
             android:parentActivityName=".admin.AdminActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
 
         <provider
             android:name=".data.BMCProvider"
             android:authorities="com.bmc.dataprovider"
             android:exported="false" />
 
+        <!--
+            android:configChanges="orientation|screenSize"
+            -->
         <activity
             android:name=".admin.AppointmentMgnActivity"
-            android:configChanges="orientation|screenSize"
             android:parentActivityName=".admin.AdminActivity"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".VisitorWelcomeActivity"
             android:parentActivityName=".admin.AdminActivity" />
