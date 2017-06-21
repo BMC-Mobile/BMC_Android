@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorButtonFont">#FFFFFF</color>
     <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorListText">#393939</color>
 
     <color name="green">#32bc39</color>
     <color name="blue">#4286f4</color>
@@ -30,5 +31,5 @@
     <color name="colorA400">#0097A7</color>
     <color name="colorA700">#00BCD4</color>
 
-
+    <color name="colorA800">#b5cbce</color>
 </resources>

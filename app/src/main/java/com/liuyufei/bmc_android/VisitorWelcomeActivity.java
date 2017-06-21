@@ -1,16 +1,23 @@
 package com.liuyufei.bmc_android;
 
+import android.Manifest;
 import android.content.AsyncQueryHandler;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
-
+import android.util.Log;
 import com.liuyufei.bmc_android.data.BMCContract;
+import com.liuyufei.bmc_android.login.LoginActivity;
 import com.liuyufei.bmc_android.model.Staff;
 import com.liuyufei.bmc_android.model.Visitor;
 import com.liuyufei.bmc_android.utility.Constants;
@@ -19,12 +26,29 @@ import static com.liuyufei.bmc_android.R.id.checkbtn;
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
 
 public class VisitorWelcomeActivity extends AppCompatActivity {
+    static String TAG = "VisitorWelcomeActivity";
+    Button btnRing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visitor_welcome);
+        btnRing = (Button) findViewById(R.id.ring_button_visit);
+        //ring reception
+        // Set click Ring
+        btnRing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG,"User Click Ring");
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    requestCameraPermission();
+                    return ;
+                }
 
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "0277777006"));
+                startActivity(intent);
+            }
+        });
 
         findViewById(checkbtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,5 +112,36 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private static final int REQUEST_CALL_PHONE = 0;
+
+    public void requestCameraPermission(){
+        Log.i(TAG,"requestCameraPermission -- start --");
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.CALL_PHONE)){
+            ActivityCompat.requestPermissions(VisitorWelcomeActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_PHONE);
+        }else{
+            ActivityCompat.requestPermissions(VisitorWelcomeActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_CALL_PHONE);
+        }
+    }
+
+    /**
+     * Handle the permission check result of contacts
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode==RESULT_OK){
+            Log.i(TAG,"print onRequestPermission return yes");
+            Log.i(TAG,"print permission granted:" + PackageManager.PERMISSION_GRANTED);
+
+            //check if only permission has been granted
+            if(grantResults.length==1 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Log.i(TAG,"Contacts Permission Granted");
+
+            }
+        }
     }
 }

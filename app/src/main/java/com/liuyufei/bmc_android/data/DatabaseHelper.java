@@ -121,11 +121,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //create visitors
         for(int i=0;i<items;i++){
-            values.put(VisitorEntry.COLUMN_BUSINESS_NAME, "China");
-            values.put(VisitorEntry.COLUMN_NAME, "XI JINP"+i);
-            values.put(VisitorEntry.COLUMN_MOBILE, "123456");
+            if(i==1){
+                values.put(VisitorEntry.COLUMN_BUSINESS_NAME, "Spark");
+                values.put(VisitorEntry.COLUMN_NAME, "Smith"+i);
+                values.put(VisitorEntry.COLUMN_MOBILE, "123456");
+            }else if(i==2){
+                values.put(VisitorEntry.COLUMN_BUSINESS_NAME, "BMC");
+                values.put(VisitorEntry.COLUMN_NAME, "Steward"+i);
+                values.put(VisitorEntry.COLUMN_MOBILE, "123456");
+            }else if(i==3){
+                values.put(VisitorEntry.COLUMN_BUSINESS_NAME, "BMC");
+                values.put(VisitorEntry.COLUMN_NAME, "Hernandez"+i);
+                values.put(VisitorEntry.COLUMN_MOBILE, "123456");
+            }else{
+                values.put(VisitorEntry.COLUMN_BUSINESS_NAME, "Wintec");
+                values.put(VisitorEntry.COLUMN_NAME, "Visitor"+i);
+                values.put(VisitorEntry.COLUMN_MOBILE, "123456");
+            }
+
             cal.setTime(new Date());
-            cal.add(Calendar.DAY_OF_YEAR,-i-5);
+            //cal.add(Calendar.HOUR_OF_DAY,-i-5);
             values.put(VisitorEntry.COLUMN_CREATION_TIME, dateFormat.format(cal.getTime()));
             values.put(VisitorEntry.COLUMN_LASTLOGIN_TIME, dateFormat.format(cal.getTime()));
             if(i%2==0) {
@@ -151,9 +166,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(AppointmentEntry.COLUMN_VISITOR, visitor);
             cal.setTime(new Date());
             if(i%3==0){
-                cal.add(Calendar.DAY_OF_YEAR,-i-1);
+                cal.add(Calendar.HOUR_OF_DAY,-i-1);
             }else{
-                cal.add(Calendar.DAY_OF_YEAR,-i);
+                cal.add(Calendar.HOUR_OF_DAY,-i);
             }
             values.put(AppointmentEntry.COLUMN_DATETIME, dateFormat.format(cal.getTime()));
             visitorsID.add(db.insert(AppointmentEntry.TABLE_NAME, null, values));
