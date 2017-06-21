@@ -31,6 +31,10 @@ public class PieChartFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        getActivity().setTitle("Appointment Statistic");
+
+
         com.github.mikephil.charting.charts.PieChart pieChart = new com.github.mikephil.charting.charts.PieChart(this.getActivity());
 
 

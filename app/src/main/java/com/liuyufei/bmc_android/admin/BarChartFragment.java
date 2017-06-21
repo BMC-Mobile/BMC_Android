@@ -42,6 +42,8 @@ public class BarChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        getActivity().setTitle("Visitor Statistic");
+
         List<Entry> newVisitors = new ArrayList<>();
         List<Entry> oldVisitors = new ArrayList<>();
 
