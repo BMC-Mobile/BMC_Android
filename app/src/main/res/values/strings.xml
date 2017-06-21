@@ -22,4 +22,7 @@
     <string name="IsLoggedIn">IsLoggedIn</string>
     <string name="logo">just a png file</string>
     <integer name="PRIVATE_MODE">0</integer>
+
+    <item name="visible" type="id"/>
+    <item name="masked" type="id"/>
 </resources>
