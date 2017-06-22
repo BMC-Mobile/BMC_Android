@@ -13,6 +13,8 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="visitor_welcome_tv">DoubleTap back to Admin panel</string>
     <string name="btn_string_login">LOGIN</string>
     <string name="btn_ring_reception">RING RECEPTION</string>
     <string name="prompt_email">Mobile</string>

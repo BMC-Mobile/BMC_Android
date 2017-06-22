@@ -10,6 +10,28 @@
     android:background="@drawable/app_bg"
     tools:context="com.liuyufei.bmc_android.VisitorWelcomeActivity">
 
+    <ImageView
+        android:id="@+id/company_logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".7"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_bmc_icon"
+        android:contentDescription="@string/logo" />
+
+    <ImageView
+        android:id="@+id/company_logo_text"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".4"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_bmc_text"
+        android:contentDescription="@string/logo"
+        />
+
+
     <EditText
         android:id="@+id/inputMobile"
         android:layout_width="match_parent"
@@ -35,5 +57,11 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/button_squre"
         android:text="RING RECEPTION" />
-
+    <TextView
+        android:text="@string/visitor_welcome_tv"
+        android:textColor="@color/color200"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

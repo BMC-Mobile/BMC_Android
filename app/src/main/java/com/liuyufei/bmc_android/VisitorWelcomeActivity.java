@@ -8,14 +8,20 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.GestureDetectorCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
+
+import com.liuyufei.bmc_android.admin.AdminActivity;
 import com.liuyufei.bmc_android.data.BMCContract;
 import com.liuyufei.bmc_android.login.LoginActivity;
 import com.liuyufei.bmc_android.model.Staff;
@@ -25,13 +31,22 @@ import com.liuyufei.bmc_android.utility.Constants;
 import static com.liuyufei.bmc_android.R.id.checkbtn;
 import static com.liuyufei.bmc_android.data.BMCContract.CHECKIN;
 
-public class VisitorWelcomeActivity extends AppCompatActivity {
+public class VisitorWelcomeActivity extends AppCompatActivity implements
+            GestureDetector.OnDoubleTapListener,
+            GestureDetector.OnGestureListener{
     static String TAG = "VisitorWelcomeActivity";
     Button btnRing;
+
+    private GestureDetectorCompat myDector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Actionbar
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
         setContentView(R.layout.activity_visitor_welcome);
         btnRing = (Button) findViewById(R.id.ring_button_visit);
         //ring reception
@@ -111,7 +126,8 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
 
             }
         });
-
+        myDector = new GestureDetectorCompat(this,this);
+        myDector.setOnDoubleTapListener(this);
     }
 
     private static final int REQUEST_CALL_PHONE = 0;
@@ -143,5 +159,64 @@ public class VisitorWelcomeActivity extends AppCompatActivity {
 
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.myDector.onTouchEvent(event);
+        return super.onTouchEvent(event);
+    }
+
+    // Visitor Welcome
+    public void backToAdminActivity(){
+        Intent i = new Intent(getApplicationContext(), AdminActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+    @Override
+    public boolean onSingleTapConfirmed(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDoubleTap(MotionEvent e) {
+        backToAdminActivity();
+        return true;
+    }
+
+    @Override
+    public boolean onDoubleTapEvent(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
     }
 }

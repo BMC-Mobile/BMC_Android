@@ -258,9 +258,13 @@ public class VisitorCheckIn extends AppCompatActivity {
 
         insertHandler.startInsert(1, null, BMCContract.VisitorEntry.CONTENT_URI, visitorValues);
         Constants.STR_ACIVITY_NAME = "VisitorCheckInActivity";
-        Intent goAdmin = new Intent(VisitorCheckIn.this, AdminActivity.class);
-        startActivity(goAdmin);
 
+        // switch to visitor welcome
+        //Intent goAdmin = new Intent(VisitorCheckIn.this, AdminActivity.class);
+        // double tap visitor welcome will back to adminactivity
+        Intent goAdmin = new Intent(VisitorCheckIn.this, VisitorWelcomeActivity.class);
+        startActivity(goAdmin);
+        finish();
     }
 
 
@@ -282,12 +286,14 @@ public class VisitorCheckIn extends AppCompatActivity {
                         values.put(BMCContract.VisitorEntry.COLUMN_CHECK_STATUS, CHECKOUT);
                         queryHandler.startUpdate(1, null, BMCContract.VisitorEntry.CONTENT_URI, values, selection, arguments);
                         Constants.STR_ACIVITY_NAME = "VisitorCheckInActivity";
-                        Intent goAdmin = new Intent(VisitorCheckIn.this, AdminActivity.class);
+                        // switch to visitor welcome
+                        //Intent goAdmin = new Intent(VisitorCheckIn.this, AdminActivity.class);
+                        // double tap visitor welcome will back to adminactivity
+                        Intent goAdmin = new Intent(VisitorCheckIn.this, VisitorWelcomeActivity.class);
                         startActivity(goAdmin);
+                        finish();
                     }
                 })
                 .setNegativeButton(android.R.string.no, null).show();
-
-
     }
 }
