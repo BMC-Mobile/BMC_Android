@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+
 import com.liuyufei.bmc_android.R;
 
 import java.text.DateFormat;
@@ -166,9 +167,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(AppointmentEntry.COLUMN_VISITOR, visitor);
             cal.setTime(new Date());
             if(i%3==0){
-                cal.add(Calendar.HOUR_OF_DAY,-i-1);
+                cal.add(Calendar.DAY_OF_YEAR,-i-1);
             }else{
-                cal.add(Calendar.HOUR_OF_DAY,-i);
+                cal.add(Calendar.DAY_OF_YEAR,-i);
             }
             values.put(AppointmentEntry.COLUMN_DATETIME, dateFormat.format(cal.getTime()));
             visitorsID.add(db.insert(AppointmentEntry.TABLE_NAME, null, values));
